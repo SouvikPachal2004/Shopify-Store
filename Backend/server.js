@@ -10,6 +10,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Root test route
+app.get('/', (req, res) => res.json({ status: 'HappyPaws API running', version: '2.0' }));
+
 const MONGO_URI  = process.env.MONGO_URI  || 'mongodb://127.0.0.1:27017';
 const DB_NAME    = process.env.DB_NAME    || 'pawmood';
 const JWT_SECRET = process.env.JWT_SECRET || 'happypaws_secret_2026';
