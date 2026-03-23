@@ -562,8 +562,8 @@
           '<div class="order-foot">' +
             '<div class="order-total">Total: <strong>\u20B9' + total.toFixed(2) + '</strong></div>' +
             '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
-              ((['confirmed','processing'].indexOf(displayStatus) !== -1) ?
-                '<button class="btn-cancel" onclick="cancelOrder(' + JSON.stringify(o._id) + ',this)">' +
+              ((['confirmed','processing','pending'].indexOf(displayStatus) !== -1) ?
+                '<button class="btn-cancel" onclick="cancelOrder(\'' + String(o._id.$oid || o._id) + '\',this)">' +
                   '<i class="fas fa-times-circle"></i> Cancel Order' +
                 '</button>' : '') +
               '<button class="btn-track" onclick="openTrack(' + JSON.stringify(o).replace(/"/g,'&quot;') + ')">' +
