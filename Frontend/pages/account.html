@@ -163,6 +163,9 @@
     }
     .t-step.done   .t-dot { background:#2563eb; border-color:#2563eb; color:#fff; }
     .t-step.active .t-dot { background:#fff; border-color:#2563eb; color:#2563eb; box-shadow:0 0 0 4px rgba(37,99,235,.15); }
+    .t-step.cancelled .t-dot { background:#dc2626; border-color:#dc2626; color:#fff; }
+    .t-step.cancelled .t-line { background:#dc2626; }
+    .t-step.cancelled .t-body h4 { color:#dc2626; }
     .t-body { padding-bottom:22px; }
     .t-body h4 { font-size:.87rem; font-weight:700; color:#0f172a; margin-bottom:2px; }
     .t-body p  { font-size:.76rem; color:#64748b; }
@@ -596,22 +599,45 @@
 
   // -- Track modal -----------------------------------------------------------
   function openTrack(order) {
+    // Apply local cancellation
+    var localCancelled = [];
+    try { localCancelled = JSON.parse(localStorage.getItem('hp_cancelled_orders')) || []; } catch(e){}
+    var orderId = String(order._id.$oid || order._id);
+    if (localCancelled.indexOf(orderId) !== -1) order = Object.assign({}, order, { status: 'cancelled' });
+
+    var isCancelled = order.status === 'cancelled';
     var idx = statusIndex(order.status);
     document.getElementById('tm-order-no').textContent   = order.orderNumber || 'Order';
     document.getElementById('tm-order-date').textContent = 'Placed on ' + fmtDate(order.createdAt);
     var html = '';
-    for (var s = 0; s < STEPS.length; s++) {
-      var cls = s < idx ? 'done' : (s === idx ? 'active' : '');
+
+    if (isCancelled) {
+      for (var s = 0; s <= idx; s++) {
+        html +=
+          '<div class="t-step done">' +
+            '<div class="t-line"></div>' +
+            '<div class="t-dot"><i class="' + STEPS[s].icon + '"></i></div>' +
+            '<div class="t-body"><h4>' + STEPS[s].label + '</h4><p>' + STEP_DESC[s] + '</p></div>' +
+          '</div>';
+      }
       html +=
-        '<div class="t-step ' + cls + '">' +
+        '<div class="t-step cancelled">' +
           '<div class="t-line"></div>' +
-          '<div class="t-dot"><i class="' + STEPS[s].icon + '"></i></div>' +
-          '<div class="t-body">' +
-            '<h4>' + STEPS[s].label + '</h4>' +
-            '<p>' + STEP_DESC[s] + '</p>' +
-          '</div>' +
+          '<div class="t-dot"><i class="fas fa-times"></i></div>' +
+          '<div class="t-body"><h4>Order Cancelled</h4><p>This order has been cancelled by you.</p></div>' +
         '</div>';
+    } else {
+      for (var s = 0; s < STEPS.length; s++) {
+        var cls = s < idx ? 'done' : (s === idx ? 'active' : '');
+        html +=
+          '<div class="t-step ' + cls + '">' +
+            '<div class="t-line"></div>' +
+            '<div class="t-dot"><i class="' + STEPS[s].icon + '"></i></div>' +
+            '<div class="t-body"><h4>' + STEPS[s].label + '</h4><p>' + STEP_DESC[s] + '</p></div>' +
+          '</div>';
+      }
     }
+
     document.getElementById('tm-steps').innerHTML = html;
     document.getElementById('track-overlay').classList.add('open');
   }

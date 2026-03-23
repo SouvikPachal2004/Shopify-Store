@@ -172,6 +172,9 @@
     }
     .track-step.done   .track-step-dot { background: #2563eb; border-color: #2563eb; color: #fff; }
     .track-step.active .track-step-dot { background: #fff; border-color: #2563eb; color: #2563eb; box-shadow: 0 0 0 4px rgba(37,99,235,.15); }
+    .track-step.cancelled .track-step-dot { background: #dc2626; border-color: #dc2626; color: #fff; }
+    .track-step.cancelled .track-step-line { background: #dc2626; }
+    .track-step.cancelled .track-step-body h4 { color: #dc2626; }
     .track-step-body { padding-bottom: 24px; }
     .track-step-body h4 { font-size: .9rem; font-weight: 700; color: #0f172a; margin-bottom: 2px; }
     .track-step-body p  { font-size: .78rem; color: #64748b; }
@@ -467,31 +470,66 @@
 
   // -- Track modal ----------------------------------------------------------
   function openTrack(order) {
+    // Apply local cancellation
+    var localCancelled = [];
+    try { localCancelled = JSON.parse(localStorage.getItem('hp_cancelled_orders')) || []; } catch(e){}
+    var orderId = String(order._id.$oid || order._id);
+    if (localCancelled.indexOf(orderId) !== -1) order = Object.assign({}, order, { status: 'cancelled' });
+
+    var isCancelled = order.status === 'cancelled';
     var stepIdx = statusIndex(order.status);
     document.getElementById('modal-order-no').textContent   = order.orderNumber || 'Order';
     document.getElementById('modal-order-date').textContent = 'Placed on ' + formatDate(order.createdAt);
 
     var TRACK_DETAILS = [
-      { label: 'Order Placed',   desc: 'Your order has been received and payment confirmed.' },
-      { label: 'Order Confirmed',desc: 'Seller has confirmed your order and is preparing it.' },
-      { label: 'Processing',     desc: 'Your items are being packed and quality checked.' },
-      { label: 'Shipped',        desc: 'Your order is on the way! Out for delivery soon.' },
-      { label: 'Delivered',      desc: 'Your order has been delivered. Enjoy!' }
+      { label: 'Order Placed',    desc: 'Your order has been received and payment confirmed.' },
+      { label: 'Order Confirmed', desc: 'Seller has confirmed your order and is preparing it.' },
+      { label: 'Processing',      desc: 'Your items are being packed and quality checked.' },
+      { label: 'Shipped',         desc: 'Your order is on the way! Out for delivery soon.' },
+      { label: 'Delivered',       desc: 'Your order has been delivered. Enjoy!' }
     ];
 
     var html = '';
-    for (var s = 0; s < TRACK_DETAILS.length; s++) {
-      var cls = s < stepIdx ? 'done' : (s === stepIdx ? 'active' : '');
+
+    if (isCancelled) {
+      // Show steps up to where it was cancelled, then cancelled step
+      for (var s = 0; s <= stepIdx; s++) {
+        var cls = s < stepIdx ? 'done' : 'done';
+        html +=
+          '<div class="track-step ' + cls + '">' +
+            '<div class="track-step-line"></div>' +
+            '<div class="track-step-dot"><i class="' + STEPS[s].icon + '"></i></div>' +
+            '<div class="track-step-body">' +
+              '<h4>' + TRACK_DETAILS[s].label + '</h4>' +
+              '<p>' + TRACK_DETAILS[s].desc + '</p>' +
+            '</div>' +
+          '</div>';
+      }
+      // Add cancelled step
       html +=
-        '<div class="track-step ' + cls + '">' +
+        '<div class="track-step cancelled">' +
           '<div class="track-step-line"></div>' +
-          '<div class="track-step-dot"><i class="' + STEPS[s].icon + '"></i></div>' +
+          '<div class="track-step-dot"><i class="fas fa-times"></i></div>' +
           '<div class="track-step-body">' +
-            '<h4>' + TRACK_DETAILS[s].label + '</h4>' +
-            '<p>' + TRACK_DETAILS[s].desc + '</p>' +
+            '<h4>Order Cancelled</h4>' +
+            '<p>This order has been cancelled by you.</p>' +
           '</div>' +
         '</div>';
+    } else {
+      for (var s = 0; s < TRACK_DETAILS.length; s++) {
+        var cls = s < stepIdx ? 'done' : (s === stepIdx ? 'active' : '');
+        html +=
+          '<div class="track-step ' + cls + '">' +
+            '<div class="track-step-line"></div>' +
+            '<div class="track-step-dot"><i class="' + STEPS[s].icon + '"></i></div>' +
+            '<div class="track-step-body">' +
+              '<h4>' + TRACK_DETAILS[s].label + '</h4>' +
+              '<p>' + TRACK_DETAILS[s].desc + '</p>' +
+            '</div>' +
+          '</div>';
+      }
     }
+
     document.getElementById('modal-track-steps').innerHTML = html;
     document.getElementById('track-modal').classList.add('open');
   }
