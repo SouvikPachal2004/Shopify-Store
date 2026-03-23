@@ -1,0 +1,571 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#x1F43E;</text></svg>" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Account - HappyPaws</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <style>
+    .acct-wrap { max-width: 860px; margin: 32px auto 60px; padding: 0 16px; }
+
+    /* Profile banner */
+    .acct-banner {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 55%, #2563eb 100%);
+      border-radius: 20px; padding: 28px 32px;
+      display: flex; align-items: center; gap: 18px;
+      color: #fff; margin-bottom: 28px; position: relative; overflow: hidden;
+    }
+    .acct-banner::before {
+      content:''; position:absolute; width:240px; height:240px;
+      background:rgba(255,255,255,.05); border-radius:50%; top:-70px; right:-50px;
+    }
+    .acct-avatar {
+      width: 60px; height: 60px; border-radius: 50%;
+      background: linear-gradient(135deg,#f97316,#ef4444);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; font-weight: 800; color: #fff; flex-shrink: 0;
+      border: 3px solid rgba(255,255,255,.3);
+    }
+    .acct-banner-info { flex: 1; position: relative; z-index: 1; }
+    .acct-banner-info h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: 3px; }
+    .acct-banner-info p  { color: rgba(255,255,255,.65); font-size: .85rem; }
+
+    /* Tabs */
+    .acct-tabs { display: flex; gap: 6px; margin-bottom: 24px; background: #f1f5f9; border-radius: 12px; padding: 5px; }
+    .acct-tab {
+      flex: 1; padding: 10px 0; border: none; border-radius: 9px;
+      font-family: Poppins,sans-serif; font-size: .85rem; font-weight: 600;
+      cursor: pointer; background: transparent; color: #64748b; transition: all .2s;
+    }
+    .acct-tab.active { background: #fff; color: #2563eb; box-shadow: 0 2px 8px rgba(15,23,42,.08); }
+
+    /* Cards */
+    .acct-card {
+      background: #fff; border-radius: 16px; border: 1px solid #e2e8f0;
+      box-shadow: 0 2px 16px rgba(15,23,42,.06); padding: 28px; margin-bottom: 20px;
+    }
+    .acct-card h3 {
+      font-size: .95rem; font-weight: 800; color: #0f172a;
+      margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
+    }
+    .acct-card h3 i {
+      width: 30px; height: 30px; background: linear-gradient(135deg,#2563eb,#7c3aed);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: .78rem; flex-shrink: 0;
+    }
+
+    /* Form */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-grid.cols-1 { grid-template-columns: 1fr; }
+    .fg { display: flex; flex-direction: column; gap: 5px; }
+    .fg label { font-size: .78rem; font-weight: 600; color: #475569; }
+    .fg input, .fg select {
+      padding: 10px 13px; border: 1.5px solid #e2e8f0; border-radius: 10px;
+      font-family: Poppins,sans-serif; font-size: .88rem; color: #0f172a;
+      outline: none; transition: border-color .2s, box-shadow .2s; background: #fafbff;
+    }
+    .fg input:focus, .fg select:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,.1); background: #fff; }
+    .fg input[readonly] { background: #f8fafc; color: #64748b; cursor: not-allowed; }
+    .save-btn {
+      margin-top: 18px; padding: 11px 28px;
+      background: linear-gradient(135deg,#2563eb,#7c3aed);
+      color: #fff; border: none; border-radius: 10px;
+      font-family: Poppins,sans-serif; font-size: .88rem; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; gap: 7px; transition: opacity .2s;
+    }
+    .save-btn:hover { opacity: .9; }
+    .save-msg { font-size: .8rem; font-weight: 600; margin-top: 10px; display: none; }
+    .save-msg.ok  { color: #16a34a; }
+    .save-msg.err { color: #dc2626; }
+
+    /* Tab panels */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Orders */
+    .order-card {
+      background: #fff; border-radius: 14px; border: 1px solid #e2e8f0;
+      box-shadow: 0 2px 12px rgba(15,23,42,.05); margin-bottom: 14px; overflow: hidden;
+      transition: box-shadow .2s;
+    }
+    .order-card:hover { box-shadow: 0 6px 24px rgba(15,23,42,.1); }
+    .order-head {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px 18px; border-bottom: 1px solid #f1f5f9; flex-wrap: wrap; gap: 8px;
+    }
+    .order-no   { font-size: .9rem; font-weight: 800; color: #0f172a; }
+    .order-date { font-size: .75rem; color: #94a3b8; margin-top: 2px; }
+    .order-badge {
+      padding: 3px 11px; border-radius: 50px; font-size: .72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .05em;
+    }
+    .badge-confirmed  { background:#dcfce7; color:#15803d; }
+    .badge-processing { background:#fef3c7; color:#92400e; }
+    .badge-shipped    { background:#dbeafe; color:#1d4ed8; }
+    .badge-delivered  { background:#f0fdf4; color:#166534; border:1px solid #bbf7d0; }
+    .badge-pending    { background:#f1f5f9; color:#475569; }
+    .order-thumbs { display:flex; gap:8px; padding:12px 18px; flex-wrap:wrap; }
+    .order-thumb  { width:48px; height:48px; border-radius:9px; object-fit:cover; border:1px solid #f1f5f9; }
+    .order-foot {
+      display:flex; justify-content:space-between; align-items:center;
+      padding:10px 18px; background:#f8fafc; flex-wrap:wrap; gap:8px;
+    }
+    .order-total { font-size:.85rem; color:#475569; }
+    .order-total strong { color:#0f172a; }
+    .btn-track {
+      padding:7px 14px; background:linear-gradient(135deg,#2563eb,#7c3aed);
+      color:#fff; border:none; border-radius:8px; font-family:Poppins,sans-serif;
+      font-size:.78rem; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:5px;
+    }
+    .btn-track:hover { opacity:.9; }
+    .empty-orders { text-align:center; padding:48px 20px; color:#94a3b8; }
+    .empty-orders i { font-size:2.5rem; opacity:.3; display:block; margin-bottom:14px; }
+
+    /* Track modal */
+    .track-overlay {
+      position:fixed; inset:0; background:rgba(15,23,42,.5);
+      backdrop-filter:blur(4px); z-index:1000;
+      display:flex; align-items:center; justify-content:center; padding:20px;
+      opacity:0; pointer-events:none; transition:opacity .25s;
+    }
+    .track-overlay.open { opacity:1; pointer-events:all; }
+    .track-modal {
+      background:#fff; border-radius:20px; max-width:520px; width:100%;
+      box-shadow:0 24px 60px rgba(15,23,42,.2); padding:28px;
+      transform:translateY(14px) scale(.97); transition:transform .25s;
+    }
+    .track-overlay.open .track-modal { transform:translateY(0) scale(1); }
+    .track-modal-head { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:22px; }
+    .track-modal-head h3 { font-size:1rem; font-weight:800; color:#0f172a; }
+    .track-modal-head p  { font-size:.78rem; color:#64748b; margin-top:3px; }
+    .modal-close { background:none; border:none; font-size:1.1rem; color:#94a3b8; cursor:pointer; }
+    .modal-close:hover { color:#0f172a; }
+    .track-steps { display:flex; flex-direction:column; }
+    .t-step { display:flex; gap:14px; position:relative; }
+    .t-step:not(:last-child) .t-line { position:absolute; left:14px; top:30px; width:2px; height:calc(100% + 4px); background:#e2e8f0; }
+    .t-step.done .t-line { background:#2563eb; }
+    .t-dot {
+      width:30px; height:30px; border-radius:50%; border:3px solid #e2e8f0;
+      background:#fff; display:flex; align-items:center; justify-content:center;
+      font-size:.72rem; color:#94a3b8; flex-shrink:0; z-index:1;
+    }
+    .t-step.done   .t-dot { background:#2563eb; border-color:#2563eb; color:#fff; }
+    .t-step.active .t-dot { background:#fff; border-color:#2563eb; color:#2563eb; box-shadow:0 0 0 4px rgba(37,99,235,.15); }
+    .t-body { padding-bottom:22px; }
+    .t-body h4 { font-size:.87rem; font-weight:700; color:#0f172a; margin-bottom:2px; }
+    .t-body p  { font-size:.76rem; color:#64748b; }
+    .t-step.done   .t-body h4 { color:#2563eb; }
+
+    @media(max-width:600px){
+      .form-grid { grid-template-columns:1fr; }
+      .acct-banner { flex-direction:column; text-align:center; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-shell">
+
+  <!-- HEADER -->
+  <header class="header" id="main-header">
+    <a href="../index.html" class="logo"><div class="paw-icon">🐾</div>Happy<span>Paws</span></a>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="header-icons">
+      <button class="icon-btn" onclick="window.location.href='cart.html'">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-badge" id="cart-count" style="display:none">0</span>
+      </button>
+      <button class="btn-login btn" onclick="window.location.href='login.html'"><i class="fas fa-sign-in-alt"></i> Login</button>
+      <button class="btn-signup" onclick="window.location.href='signup.html'"><i class="fas fa-user-plus"></i> Sign Up</button>
+    </div>
+  </header>
+
+  <div class="acct-wrap">
+
+    <!-- BANNER -->
+    <div class="acct-banner">
+      <div class="acct-avatar" id="acct-avatar">?</div>
+      <div class="acct-banner-info">
+        <h2 id="acct-name">Loading...</h2>
+        <p id="acct-email">—</p>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="acct-tabs">
+      <button class="acct-tab active" onclick="switchTab('profile', this)">
+        <i class="fas fa-user" style="margin-right:6px"></i> Personal Details
+      </button>
+      <button class="acct-tab" onclick="switchTab('address', this)">
+        <i class="fas fa-map-marker-alt" style="margin-right:6px"></i> Address
+      </button>
+      <button class="acct-tab" onclick="switchTab('orders', this)">
+        <i class="fas fa-box" style="margin-right:6px"></i> My Orders
+      </button>
+    </div>
+
+    <!-- TAB: PERSONAL DETAILS -->
+    <div class="tab-panel active" id="tab-profile">
+      <div class="acct-card">
+        <h3><i class="fas fa-user"></i> Personal Details</h3>
+        <form id="profile-form">
+          <div class="form-grid">
+            <div class="fg">
+              <label>Full Name</label>
+              <input type="text" id="p-name" name="name" placeholder="Rahul Sharma" required />
+            </div>
+            <div class="fg">
+              <label>Email Address</label>
+              <input type="email" id="p-email" name="email" placeholder="rahul@example.com" readonly />
+            </div>
+            <div class="fg">
+              <label>Mobile Number</label>
+              <input type="tel" id="p-phone" name="phone" placeholder="98765 43210" maxlength="10" />
+            </div>
+            <div class="fg">
+              <label>Date of Birth (optional)</label>
+              <input type="date" id="p-dob" name="dob" />
+            </div>
+          </div>
+          <button type="submit" class="save-btn"><i class="fas fa-save"></i> Save Changes</button>
+          <div class="save-msg" id="profile-msg"></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- TAB: ADDRESS -->
+    <div class="tab-panel" id="tab-address">
+      <div class="acct-card">
+        <h3><i class="fas fa-map-marker-alt"></i> Delivery Address</h3>
+        <form id="address-form">
+          <div class="form-grid cols-1">
+            <div class="fg">
+              <label>Flat / House No., Building, Street</label>
+              <input type="text" id="a-address" name="address" placeholder="e.g. 12B, Sunshine Apartments, MG Road" />
+            </div>
+            <div class="fg">
+              <label>Area / Locality (optional)</label>
+              <input type="text" id="a-address2" name="address2" placeholder="e.g. Koramangala" />
+            </div>
+          </div>
+          <div class="form-grid" style="margin-top:14px">
+            <div class="fg">
+              <label>City / Town</label>
+              <input type="text" id="a-city" name="city" placeholder="Bengaluru" />
+            </div>
+            <div class="fg">
+              <label>State / UT</label>
+              <select id="a-state" name="state">
+                <option value="">Select State</option>
+                <optgroup label="States">
+                  <option>Andhra Pradesh</option><option>Arunachal Pradesh</option>
+                  <option>Assam</option><option>Bihar</option><option>Chhattisgarh</option>
+                  <option>Goa</option><option>Gujarat</option><option>Haryana</option>
+                  <option>Himachal Pradesh</option><option>Jharkhand</option>
+                  <option>Karnataka</option><option>Kerala</option>
+                  <option>Madhya Pradesh</option><option>Maharashtra</option>
+                  <option>Manipur</option><option>Meghalaya</option><option>Mizoram</option>
+                  <option>Nagaland</option><option>Odisha</option><option>Punjab</option>
+                  <option>Rajasthan</option><option>Sikkim</option><option>Tamil Nadu</option>
+                  <option>Telangana</option><option>Tripura</option>
+                  <option>Uttar Pradesh</option><option>Uttarakhand</option>
+                  <option>West Bengal</option>
+                </optgroup>
+                <optgroup label="Union Territories">
+                  <option>Andaman and Nicobar Islands</option><option>Chandigarh</option>
+                  <option>Dadra and Nagar Haveli and Daman and Diu</option>
+                  <option>Delhi</option><option>Jammu and Kashmir</option>
+                  <option>Ladakh</option><option>Lakshadweep</option><option>Puducherry</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="fg">
+              <label>PIN Code</label>
+              <input type="text" id="a-pincode" name="pincode" placeholder="560001" maxlength="6" pattern="[0-9]{6}" />
+            </div>
+          </div>
+          <button type="submit" class="save-btn"><i class="fas fa-save"></i> Save Address</button>
+          <div class="save-msg" id="address-msg"></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- TAB: MY ORDERS -->
+    <div class="tab-panel" id="tab-orders">
+      <div id="orders-container">
+        <div style="text-align:center;padding:40px;color:#94a3b8">
+          <i class="fas fa-spinner fa-spin" style="font-size:1.4rem;display:block;margin-bottom:12px"></i>
+          Loading your orders...
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end acct-wrap -->
+
+  <!-- TRACK MODAL -->
+  <div class="track-overlay" id="track-overlay">
+    <div class="track-modal">
+      <div class="track-modal-head">
+        <div>
+          <h3 id="tm-order-no">Order</h3>
+          <p id="tm-order-date">—</p>
+        </div>
+        <button class="modal-close" onclick="closeTrack()"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="track-steps" id="tm-steps"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="site-footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-bottom">
+        <p>&copy; 2026 HappyPaws. All Rights Reserved.</p>
+        <div class="site-footer-bottom-links"><a href="#">Terms</a><a href="#">Privacy</a></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end page-shell -->
+
+<script src="../js/cart.js"></script>
+<script src="../js/auth.js"></script>
+<script>
+  var API = 'http://localhost:5000/api';
+
+  // ── Auth guard ────────────────────────────────────────────────────────────
+  var currentUser = null;
+  try { currentUser = JSON.parse(localStorage.getItem('currentUser')); } catch(e){}
+  if (!currentUser) { window.location.href = 'login.html'; }
+
+  // Keys scoped per user so different users don't share data
+  var uid = currentUser.id || currentUser._id || currentUser.email;
+  var PROFILE_KEY = 'hp_profile_' + uid;
+  var ADDRESS_KEY = 'hp_address_' + uid;
+
+  // ── Initials helper ───────────────────────────────────────────────────────
+  function initials(name) {
+    if (!name) return '?';
+    var p = name.trim().split(' ');
+    return p.length >= 2 ? (p[0][0] + p[p.length-1][0]).toUpperCase() : p[0][0].toUpperCase();
+  }
+
+  // ── Fill banner ───────────────────────────────────────────────────────────
+  document.getElementById('acct-avatar').textContent = initials(currentUser.name);
+  document.getElementById('acct-name').textContent   = currentUser.name;
+  document.getElementById('acct-email').textContent  = currentUser.email || '';
+
+  // ── Tab switching ─────────────────────────────────────────────────────────
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+    document.querySelectorAll('.acct-tab').forEach(function(b){ b.classList.remove('active'); });
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+    if (id === 'orders') loadOrders();
+  }
+
+  // ── Load saved profile & address from localStorage ────────────────────────
+  function loadProfile() {
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem(PROFILE_KEY)) || {}; } catch(e){}
+    // If no saved profile yet, only pre-fill name/email from the auth session
+    document.getElementById('p-name').value  = saved.name  || currentUser.name  || '';
+    document.getElementById('p-email').value = currentUser.email || '';
+    document.getElementById('p-phone').value = saved.phone || '';
+    document.getElementById('p-dob').value   = saved.dob   || '';
+  }
+
+  function loadAddress() {
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem(ADDRESS_KEY)) || {}; } catch(e){}
+    document.getElementById('a-address').value  = saved.address  || '';
+    document.getElementById('a-address2').value = saved.address2 || '';
+    document.getElementById('a-city').value     = saved.city     || '';
+    document.getElementById('a-pincode').value  = saved.pincode  || '';
+    if (saved.state) document.getElementById('a-state').value = saved.state;
+  }
+
+  loadProfile();
+  loadAddress();
+
+  // ── Save profile ──────────────────────────────────────────────────────────
+  document.getElementById('profile-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var data = {
+      name:  document.getElementById('p-name').value.trim(),
+      email: currentUser.email,
+      phone: document.getElementById('p-phone').value.trim(),
+      dob:   document.getElementById('p-dob').value
+    };
+    localStorage.setItem(PROFILE_KEY, JSON.stringify(data));
+    // Update currentUser name in session
+    currentUser.name = data.name;
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    document.getElementById('acct-name').textContent   = data.name;
+    document.getElementById('acct-avatar').textContent = initials(data.name);
+    showMsg('profile-msg', 'Personal details saved.', true);
+  });
+
+  // ── Save address ──────────────────────────────────────────────────────────
+  document.getElementById('address-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var data = {
+      address:  document.getElementById('a-address').value.trim(),
+      address2: document.getElementById('a-address2').value.trim(),
+      city:     document.getElementById('a-city').value.trim(),
+      state:    document.getElementById('a-state').value,
+      pincode:  document.getElementById('a-pincode').value.trim()
+    };
+    localStorage.setItem(ADDRESS_KEY, JSON.stringify(data));
+    showMsg('address-msg', 'Address saved successfully.', true);
+  });
+
+  function showMsg(id, text, ok) {
+    var el = document.getElementById(id);
+    el.textContent = (ok ? '✓ ' : '✗ ') + text;
+    el.className = 'save-msg ' + (ok ? 'ok' : 'err');
+    el.style.display = 'block';
+    setTimeout(function(){ el.style.display = 'none'; }, 3000);
+  }
+
+  // ── Orders ────────────────────────────────────────────────────────────────
+  var STEPS = [
+    { label:'Order Placed',  icon:'fas fa-check' },
+    { label:'Confirmed',     icon:'fas fa-thumbs-up' },
+    { label:'Processing',    icon:'fas fa-cog' },
+    { label:'Shipped',       icon:'fas fa-truck' },
+    { label:'Delivered',     icon:'fas fa-home' }
+  ];
+  var STEP_DESC = [
+    'Your order has been received and payment confirmed.',
+    'Seller has confirmed your order and is preparing it.',
+    'Your items are being packed and quality checked.',
+    'Your order is on the way! Out for delivery soon.',
+    'Your order has been delivered. Enjoy!'
+  ];
+
+  function statusIndex(s) {
+    if (s === 'pending') return 1;
+    return { placed:0, confirmed:1, processing:2, shipped:3, delivered:4 }[s] !== undefined
+      ? { placed:0, confirmed:1, processing:2, shipped:3, delivered:4 }[s] : 1;
+  }
+
+  function fmtDate(d) {
+    return new Date(d).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+  }
+
+  function calcTotal(items) {
+    var sub = 0;
+    (items||[]).forEach(function(i){ sub += Number(i.price) * Number(i.qty); });
+    return sub + 99 + Math.round(sub * 0.18 * 100) / 100;
+  }
+
+  function loadOrders() {
+    var container = document.getElementById('orders-container');
+    container.innerHTML = '<div style="text-align:center;padding:40px;color:#94a3b8"><i class="fas fa-spinner fa-spin" style="font-size:1.4rem;display:block;margin-bottom:12px"></i>Loading...</div>';
+
+    var params = new URLSearchParams();
+    if (currentUser.email) params.append('email', currentUser.email);
+    if (currentUser.id)    params.append('userId', currentUser.id);
+    if (currentUser._id)   params.append('userId', currentUser._id);
+
+    fetch(API + '/orders?' + params.toString())
+      .then(function(r){ return r.json(); })
+      .then(function(orders){ renderOrders(Array.isArray(orders) ? orders : []); })
+      .catch(function(){ renderOrders([]); });
+  }
+
+  function renderOrders(orders) {
+    var container = document.getElementById('orders-container');
+    if (!orders.length) {
+      container.innerHTML =
+        '<div class="empty-orders">' +
+          '<i class="fas fa-box-open"></i>' +
+          '<h3 style="font-size:1rem;font-weight:700;color:#475569;margin-bottom:8px">No orders yet</h3>' +
+          '<p style="font-size:.85rem">Start shopping to see your orders here.</p>' +
+          '<a href="shop.html" class="btn btn-primary" style="margin-top:16px;display:inline-flex;gap:6px">' +
+            '<i class="fas fa-shopping-bag"></i> Browse Products' +
+          '</a>' +
+        '</div>';
+      return;
+    }
+
+    var html = '';
+    for (var i = 0; i < orders.length; i++) {
+      var o = orders[i];
+      var items = o.items || [];
+      var total = calcTotal(items);
+      var rawStatus = o.status || 'confirmed';
+      var displayStatus = rawStatus === 'pending' ? 'confirmed' : rawStatus;
+      var badgeCls = 'badge-' + displayStatus;
+      var show = Math.min(items.length, 4);
+      var thumbs = '';
+      for (var t = 0; t < show; t++) {
+        thumbs += '<img class="order-thumb" src="' +
+          (items[t].image || 'https://images.unsplash.com/photo-1517849845537-4d257902454a?w=200&q=80') +
+          '" alt="' + items[t].title + '" title="' + items[t].title + '" />';
+      }
+      if (items.length > 4) thumbs += '<span style="font-size:.75rem;color:#64748b;align-self:center">+' + (items.length-4) + ' more</span>';
+
+      html +=
+        '<div class="order-card">' +
+          '<div class="order-head">' +
+            '<div>' +
+              '<div class="order-no">' + (o.orderNumber || 'HP-' + o._id) + '</div>' +
+              '<div class="order-date">' + fmtDate(o.createdAt) + ' &nbsp;·&nbsp; ' + items.length + ' item' + (items.length !== 1 ? 's' : '') + '</div>' +
+            '</div>' +
+            '<span class="order-badge ' + badgeCls + '">' + displayStatus + '</span>' +
+          '</div>' +
+          (thumbs ? '<div class="order-thumbs">' + thumbs + '</div>' : '') +
+          '<div class="order-foot">' +
+            '<div class="order-total">Total: <strong>\u20B9' + total.toFixed(2) + '</strong></div>' +
+            '<button class="btn-track" onclick="openTrack(' + JSON.stringify(o).replace(/"/g,'&quot;') + ')">' +
+              '<i class="fas fa-map-marker-alt"></i> Track Order' +
+            '</button>' +
+          '</div>' +
+        '</div>';
+    }
+    container.innerHTML = html;
+  }
+
+  // ── Track modal ───────────────────────────────────────────────────────────
+  function openTrack(order) {
+    var idx = statusIndex(order.status);
+    document.getElementById('tm-order-no').textContent   = order.orderNumber || 'Order';
+    document.getElementById('tm-order-date').textContent = 'Placed on ' + fmtDate(order.createdAt);
+    var html = '';
+    for (var s = 0; s < STEPS.length; s++) {
+      var cls = s < idx ? 'done' : (s === idx ? 'active' : '');
+      html +=
+        '<div class="t-step ' + cls + '">' +
+          '<div class="t-line"></div>' +
+          '<div class="t-dot"><i class="' + STEPS[s].icon + '"></i></div>' +
+          '<div class="t-body">' +
+            '<h4>' + STEPS[s].label + '</h4>' +
+            '<p>' + STEP_DESC[s] + '</p>' +
+          '</div>' +
+        '</div>';
+    }
+    document.getElementById('tm-steps').innerHTML = html;
+    document.getElementById('track-overlay').classList.add('open');
+  }
+
+  function closeTrack() { document.getElementById('track-overlay').classList.remove('open'); }
+  document.getElementById('track-overlay').addEventListener('click', function(e){
+    if (e.target === this) closeTrack();
+  });
+
+  window.addEventListener('scroll', function(){
+    document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 50);
+  });
+</script>
+</body>
+</html>

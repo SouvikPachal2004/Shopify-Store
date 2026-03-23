@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#x1F43E;</text></svg>" />Search Results - HappyPaws</title>
+  <link rel="stylesheet" href="../style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="header">
+  <div class="logo">🐾 Happy<span>Paws</span></div>
+  <nav>
+    <a href="../index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="product.html">Product</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="icons">
+    <i class="fas fa-search" onclick="window.location.href='search-results.html'"></i>
+    <i class="fas fa-shopping-cart" onclick="window.location.href='cart.html'"></i>
+    <i class="fas fa-user" onclick="window.location.href='login.html'"></i>
+  </div>
+</header>
+
+    <section class="hero" style="grid-template-columns: 1fr; min-height: 30vh; padding: 24px; background: linear-gradient(130deg, #1d4ed8 0%, #2563eb 55%, #1e3a8a 100%); margin-top: 16px;">
+      <div class="hero-text">
+        <p class="eyebrow">Search</p>
+        <h1 id="search-title">Search Results for "Dog Food"</h1>
+        <p class="hero-copy" id="results-count">Found 24 products</p>
+      </div>
+    </section>
+
+    <section class="search-section" style="padding: 32px 24px; max-width: 1400px; margin: 0 auto;">
+      <div style="display: grid; grid-template-columns: 280px 1fr; gap: 32px;">
+        <!-- Filters Sidebar -->
+        <aside style="background: white; border-radius: 12px; box-shadow: var(--shadow); padding: 24px; height: fit-content; position: sticky; top: 24px;">
+          <div style="margin-bottom: 24px;">
+            <input type="text" id="search-input" placeholder="Search products..." value="Dog Food" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 16px;">
+          </div>
+
+          <div style="border-top: 1px solid #e2e8f0; padding-top: 20px;">
+            <h3 style="font-weight: 600; margin-bottom: 16px;">Categories</h3>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                <input type="checkbox" checked style="width: 16px; height: 16px;">
+                <span>Dog Food (12)</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                <input type="checkbox" style="width: 16px; height: 16px;">
+                <span>Cat Food (8)</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                <input type="checkbox" style="width: 16px; height: 16px;">
+                <span>Treats (4)</span>
+              </label>
+            </div>
+          </div>
+
+          <div style="border-top: 1px solid #e2e8f0; padding-top: 20px; margin-top: 20px;">
+            <h3 style="font-weight: 600; margin-bottom: 16px;">Price Range</h3>
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <input type="number" placeholder="$0" min="0" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1;">
+              <span>-</span>
+              <input type="number" placeholder="$100" min="0" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1;">
+            </div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 12px; padding: 10px;">Apply</button>
+          </div>
+
+          <div style="border-top: 1px solid #e2e8f0; padding-top: 20px; margin-top: 20px;">
+            <h3 style="font-weight: 600; margin-bottom: 16px;">Rating</h3>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                <input type="radio" name="rating" style="width: 16px; height: 16px;">
+                <span>⭐⭐⭐⭐⭐ & Up</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                <input type="radio" name="rating" style="width: 16px; height: 16px;">
+                <span>⭐⭐⭐⭐ & Up</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                <input type="radio" name="rating" checked style="width: 16px; height: 16px;">
+                <span>All Ratings</span>
+              </label>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Results Grid -->
+        <main>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <select style="padding: 10px 16px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 14px;">
+              <option>Sort by: Featured</option>
+              <option>Price: Low to High</option>
+              <option>Price: High to Low</option>
+              <option>Newest First</option>
+              <option>Best Rating</option>
+            </select>
+            <div style="display: flex; gap: 8px;">
+              <button style="padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; background: white; cursor: pointer;">Grid</button>
+              <button style="padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; background: #eff6ff; color: #2563eb; cursor: pointer;">List</button>
+            </div>
+          </div>
+
+          <div id="search-results-grid" class="products-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px;"></div>
+          <div id="search-empty" style="display:none; text-align:center; margin-top:40px; color:#64748b; font-weight:600;">No matching products found yet. Try a different keyword.</div>
+
+          <!-- Pagination -->
+          <div style="display: flex; justify-content: center; gap: 8px; margin-top: 48px;">
+            <button style="padding: 10px 16px; border: 1px solid #cbd5e1; border-radius: 8px; background: white; cursor: pointer;">Previous</button>
+            <button style="padding: 10px 16px; border: 1px solid #2563eb; border-radius: 8px; background: #2563eb; color: white; cursor: pointer;">1</button>
+            <button style="padding: 10px 16px; border: 1px solid #cbd5e1; border-radius: 8px; background: white; cursor: pointer;">2</button>
+            <button style="padding: 10px 16px; border: 1px solid #cbd5e1; border-radius: 8px; background: white; cursor: pointer;">3</button>
+            <button style="padding: 10px 16px; border: 1px solid #cbd5e1; border-radius: 8px; background: white; cursor: pointer;">Next</button>
+          </div>
+        </main>
+      </div>
+    </section>
+
+    <footer class="footer"><p>© 2026 HappyPaws. All rights reserved.</p></footer>
+  </div>
+  <script src="../js/search.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

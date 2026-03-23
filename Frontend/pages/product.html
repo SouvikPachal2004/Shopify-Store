@@ -1,0 +1,515 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#x1F43E;</text></svg>" />
+  <title>Product - HappyPaws</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <style>
+    .prod-wrap { max-width: 1100px; margin: 0 auto; padding: 28px 20px 60px; }
+
+    /* Breadcrumb */
+    .breadcrumb { display:flex; gap:8px; align-items:center; font-size:.82rem; color:#94a3b8; margin-bottom:24px; }
+    .breadcrumb a { color:#2563eb; text-decoration:none; font-weight:500; }
+    .breadcrumb a:hover { text-decoration:underline; }
+    .breadcrumb span { color:#cbd5e1; }
+
+    /* Main grid */
+    .prod-grid { display:grid; grid-template-columns:1fr 1fr; gap:48px; margin-bottom:48px; }
+
+    /* Gallery */
+    .prod-gallery { position:sticky; top:90px; }
+    .main-img-box {
+      position:relative; border-radius:18px; overflow:hidden;
+      aspect-ratio:1; background:#f1f5f9;
+      box-shadow:0 4px 24px rgba(15,23,42,.1); margin-bottom:14px;
+    }
+    .main-img-box img { width:100%; height:100%; object-fit:cover; transition:transform .5s ease; }
+    .main-img-box:hover img { transform:scale(1.06); }
+    .prod-disc-badge {
+      position:absolute; top:14px; left:14px;
+      background:linear-gradient(135deg,#ef4444,#dc2626);
+      color:#fff; padding:6px 14px; border-radius:50px;
+      font-weight:700; font-size:.8rem;
+      box-shadow:0 4px 12px rgba(239,68,68,.35);
+    }
+    .thumbs { display:grid; grid-template-columns:repeat(auto-fill,minmax(80px,1fr)); gap:10px; }
+    .thumb {
+      aspect-ratio:1; border-radius:10px; overflow:hidden; cursor:pointer;
+      border:2px solid transparent; transition:all .25s; background:#f8fafc;
+    }
+    .thumb:hover, .thumb.active { border-color:#2563eb; box-shadow:0 4px 14px rgba(37,99,235,.2); }
+    .thumb img { width:100%; height:100%; object-fit:cover; }
+
+    /* Info */
+    .prod-info { padding-top:8px; }
+    .prod-brand { font-size:.75rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:#64748b; margin-bottom:8px; }
+    .prod-title { font-size:2rem; font-weight:800; color:#0f172a; line-height:1.2; margin-bottom:16px; }
+
+    /* Rating */
+    .prod-rating { display:flex; align-items:center; gap:12px; margin-bottom:22px; padding-bottom:22px; border-bottom:1px solid #e2e8f0; }
+    .stars { color:#fbbf24; font-size:1.1rem; }
+    .rating-count { font-size:.85rem; color:#64748b; }
+    .rating-link { font-size:.85rem; color:#2563eb; text-decoration:none; font-weight:600; }
+
+    /* Price box */
+    .price-box {
+      background:linear-gradient(135deg,#eff6ff,#dbeafe);
+      border-radius:14px; padding:20px 22px; margin-bottom:24px;
+      display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+    }
+    .price-now {
+      font-size:2.2rem; font-weight:800;
+      background:linear-gradient(135deg,#2563eb,#1d4ed8);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .price-old { font-size:1.2rem; color:#94a3b8; text-decoration:line-through; font-weight:500; }
+    .price-save {
+      background:linear-gradient(135deg,#10b981,#059669);
+      color:#fff; padding:4px 12px; border-radius:50px;
+      font-size:.78rem; font-weight:700;
+      box-shadow:0 3px 10px rgba(16,185,129,.3);
+    }
+
+    /* Description */
+    .prod-desc { font-size:.95rem; line-height:1.85; color:#475569; margin-bottom:24px; }
+
+    /* Color */
+    .variant-row { margin-bottom:22px; }
+    .variant-row label { font-size:.85rem; font-weight:700; color:#0f172a; display:block; margin-bottom:10px; }
+    .color-dots { display:flex; gap:12px; }
+    .cdot {
+      width:38px; height:38px; border-radius:50%; cursor:pointer;
+      border:3px solid transparent; transition:all .25s;
+      box-shadow:0 2px 8px rgba(0,0,0,.12); position:relative;
+    }
+    .cdot:hover { transform:scale(1.12); }
+    .cdot.active { border-color:#0f172a; transform:scale(1.12); }
+    .cdot.active::after { content:'✓'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:1rem; text-shadow:0 1px 3px rgba(0,0,0,.4); }
+
+    /* Qty */
+    .qty-row { margin-bottom:24px; }
+    .qty-row label { font-size:.85rem; font-weight:700; color:#0f172a; display:block; margin-bottom:10px; }
+    .qty-ctrl { display:flex; align-items:center; border:2px solid #e2e8f0; border-radius:12px; width:fit-content; overflow:hidden; }
+    .qty-ctrl:focus-within { border-color:#2563eb; }
+    .qbtn { width:44px; height:44px; border:none; background:#f1f5f9; cursor:pointer; font-size:1.2rem; font-weight:700; color:#475569; transition:all .2s; }
+    .qbtn:hover { background:linear-gradient(135deg,#2563eb,#1d4ed8); color:#fff; }
+    .qinp { width:60px; height:44px; border:none; text-align:center; font-size:1rem; font-weight:600; color:#0f172a; font-family:Poppins,sans-serif; }
+
+    /* Buttons */
+    .prod-btns { display:flex; gap:12px; margin-bottom:28px; }
+    .btn-atc {
+      flex:2; padding:16px 28px;
+      background:linear-gradient(135deg,#2563eb,#1d4ed8);
+      color:#fff; border:none; border-radius:12px;
+      font-family:Poppins,sans-serif; font-size:1rem; font-weight:700;
+      cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px;
+      box-shadow:0 6px 18px rgba(37,99,235,.3); transition:all .3s;
+    }
+    .btn-atc:hover { transform:translateY(-3px); box-shadow:0 12px 32px rgba(37,99,235,.4); }
+    .btn-wish {
+      flex:1; padding:16px 20px; background:#fff;
+      border:2px solid #e2e8f0; border-radius:12px;
+      font-family:Poppins,sans-serif; font-size:1rem; font-weight:600;
+      cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;
+      color:#64748b; transition:all .25s;
+    }
+    .btn-wish:hover { border-color:#ef4444; color:#ef4444; }
+
+    /* Meta */
+    .prod-meta { border-top:1px solid #e2e8f0; padding-top:24px; display:flex; flex-direction:column; gap:14px; }
+    .meta-row { display:flex; align-items:center; gap:14px; }
+    .meta-icon { width:40px; height:40px; border-radius:50%; background:linear-gradient(135deg,#eff6ff,#dbeafe); display:flex; align-items:center; justify-content:center; color:#2563eb; font-size:.95rem; flex-shrink:0; }
+    .meta-row strong { display:block; font-size:.85rem; color:#0f172a; }
+    .meta-row span { font-size:.78rem; color:#64748b; }
+
+    /* Features */
+    .feat-section { background:linear-gradient(135deg,#f8fafc,#f1f5f9); border-radius:18px; padding:36px; margin-bottom:40px; border:1px solid #e2e8f0; }
+    .feat-section h2 { font-size:1.2rem; font-weight:800; color:#0f172a; margin-bottom:20px; display:flex; align-items:center; gap:10px; }
+    .feat-list { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px; }
+    .feat-item { display:flex; align-items:flex-start; gap:12px; font-size:.9rem; color:#475569; padding:10px 12px; border-radius:8px; transition:background .2s; }
+    .feat-item:hover { background:#fff; }
+    .feat-item i { color:#10b981; font-size:1rem; margin-top:2px; flex-shrink:0; }
+
+    /* Reviews */
+    .reviews-section { margin-bottom:48px; }
+    .reviews-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; padding-bottom:20px; border-bottom:2px solid #e2e8f0; flex-wrap:wrap; gap:16px; }
+    .reviews-head h2 { font-size:1.2rem; font-weight:800; color:#0f172a; }
+    .avg-box { text-align:center; }
+    .avg-num { font-size:3.5rem; font-weight:800; background:linear-gradient(135deg,#fbbf24,#f59e0b); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1; }
+    .avg-sub { font-size:.8rem; color:#64748b; margin-top:4px; }
+    .review-card { background:#f8fafc; border-radius:14px; padding:18px 22px; margin-bottom:14px; border:1px solid #e2e8f0; }
+    .review-top { display:flex; align-items:center; gap:12px; margin-bottom:10px; }
+    .rev-avatar { width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,#2563eb,#7c3aed); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.9rem; flex-shrink:0; }
+    .rev-name { font-size:.88rem; font-weight:700; color:#0f172a; }
+    .rev-date { font-size:.75rem; color:#94a3b8; }
+    .rev-stars { margin-left:auto; color:#fbbf24; font-size:.95rem; }
+    .rev-text { font-size:.87rem; color:#475569; line-height:1.7; margin:0; }
+
+    /* Related */
+    .related-section { margin-bottom:48px; }
+    .related-section h2 { font-size:1.2rem; font-weight:800; color:#0f172a; margin-bottom:20px; text-align:center; }
+
+    @media(max-width:900px){
+      .prod-grid { grid-template-columns:1fr; gap:28px; }
+      .prod-gallery { position:relative; top:0; }
+      .prod-title { font-size:1.5rem; }
+      .price-now { font-size:1.7rem; }
+      .prod-btns { flex-direction:column; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-shell">
+
+  <!-- HEADER -->
+  <header class="header" id="main-header">
+    <a href="../index.html" class="logo"><div class="paw-icon">&#x1F43E;</div>Happy<span>Paws</span></a>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="header-icons">
+      <button class="icon-btn" onclick="window.location.href='cart.html'">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-badge" id="cart-count" style="display:none">0</span>
+      </button>
+      <button class="btn-login btn" onclick="window.location.href='login.html'"><i class="fas fa-sign-in-alt"></i> Login</button>
+      <button class="btn-signup" onclick="window.location.href='signup.html'"><i class="fas fa-user-plus"></i> Sign Up</button>
+    </div>
+  </header>
+
+  <div class="prod-wrap">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="../index.html">Home</a><span>/</span>
+      <a href="shop.html">Shop</a><span>/</span>
+      <span id="bc-name">Product</span>
+    </div>
+
+    <!-- Main grid -->
+    <div class="prod-grid">
+
+      <!-- Gallery -->
+      <div class="prod-gallery">
+        <div class="main-img-box">
+          <span class="prod-disc-badge" id="disc-badge" style="display:none"></span>
+          <img id="main-img" src="https://images.unsplash.com/photo-1517849845537-4d257902454a?w=800&q=80" alt="Product" />
+        </div>
+        <div class="thumbs" id="thumbs"></div>
+      </div>
+
+      <!-- Info -->
+      <div class="prod-info">
+        <div class="prod-brand" id="prod-brand">HappyPaws Premium</div>
+        <h1 class="prod-title" id="prod-title">Loading...</h1>
+
+        <div class="prod-rating">
+          <div class="stars" id="prod-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <span class="rating-count" id="prod-reviews">(0 reviews)</span>
+          <a href="#reviews" class="rating-link">Read reviews</a>
+        </div>
+
+        <div class="price-box">
+          <span class="price-now" id="price-now">&#x20B9;0</span>
+          <span class="price-old" id="price-old"></span>
+          <span class="price-save" id="price-save" style="display:none"></span>
+        </div>
+
+        <p class="prod-desc" id="prod-desc">Loading product details...</p>
+
+        <!-- Color -->
+        <div class="variant-row">
+          <label>Color: <span id="color-name" style="color:#2563eb">Blue</span></label>
+          <div class="color-dots">
+            <div class="cdot active" style="background:#2563eb" data-color="Blue"></div>
+            <div class="cdot" style="background:#10b981" data-color="Green"></div>
+            <div class="cdot" style="background:#ef4444" data-color="Red"></div>
+            <div class="cdot" style="background:#f59e0b" data-color="Orange"></div>
+          </div>
+        </div>
+
+        <!-- Qty -->
+        <div class="qty-row">
+          <label>Quantity:</label>
+          <div class="qty-ctrl">
+            <button class="qbtn" onclick="changeQty(-1)">&#8722;</button>
+            <input class="qinp" type="number" id="qty" value="1" min="1" />
+            <button class="qbtn" onclick="changeQty(1)">+</button>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="prod-btns">
+          <button class="btn-atc" id="atc-btn" onclick="addToCart()">
+            <i class="fas fa-cart-plus"></i> Add to Cart
+          </button>
+          <button class="btn-wish"><i class="far fa-heart"></i> Wishlist</button>
+        </div>
+
+        <!-- Meta -->
+        <div class="prod-meta">
+          <div class="meta-row">
+            <div class="meta-icon"><i class="fas fa-truck"></i></div>
+            <div><strong>Free Shipping</strong><span>On orders over &#x20B9;999</span></div>
+          </div>
+          <div class="meta-row">
+            <div class="meta-icon"><i class="fas fa-undo"></i></div>
+            <div><strong>Easy Returns</strong><span>30-day return policy</span></div>
+          </div>
+          <div class="meta-row">
+            <div class="meta-icon"><i class="fas fa-shield-alt"></i></div>
+            <div><strong>Secure Payment</strong><span>UPI, Cards, NetBanking, COD</span></div>
+          </div>
+          <div class="meta-row">
+            <div class="meta-icon"><i class="fas fa-check-circle"></i></div>
+            <div><strong>In Stock</strong><span>Ready to ship across India</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <div class="feat-section">
+      <h2><i class="fas fa-star" style="color:#fbbf24"></i> Product Features</h2>
+      <ul class="feat-list" id="feat-list">
+        <li class="feat-item"><i class="fas fa-check"></i><span>Loading...</span></li>
+      </ul>
+    </div>
+
+    <!-- Reviews -->
+    <div class="reviews-section" id="reviews">
+      <div class="reviews-head">
+        <h2>Customer Reviews</h2>
+        <div style="display:flex;gap:32px;align-items:center">
+          <div class="avg-box">
+            <div class="avg-num" id="avg-num">5</div>
+            <div class="avg-sub">out of 5</div>
+          </div>
+          <div id="rating-bars"></div>
+        </div>
+      </div>
+      <div id="reviews-list"></div>
+    </div>
+
+    <!-- Related -->
+    <div class="related-section">
+      <h2>You May Also Like</h2>
+      <div class="product-grid" id="related-grid"></div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="site-footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-grid">
+        <div class="site-footer-brand">
+          <div class="logo"><div class="paw-icon">&#x1F43E;</div>Happy<span>Paws</span></div>
+          <p>Quality products for happy, healthy pets — trusted by thousands of pet parents across India.</p>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+        <div class="site-footer-col"><h4>Quick Links</h4><ul>
+          <li><a href="../index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+          <li><a href="shop.html"><i class="fas fa-chevron-right"></i> Shop</a></li>
+          <li><a href="cart.html"><i class="fas fa-chevron-right"></i> Cart</a></li>
+        </ul></div>
+        <div class="site-footer-col"><h4>Support</h4><ul>
+          <li><a href="#"><i class="fas fa-chevron-right"></i> Shipping Info</a></li>
+          <li><a href="#"><i class="fas fa-chevron-right"></i> Returns</a></li>
+          <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+        </ul></div>
+        <div class="site-footer-col"><h4>Contact</h4><ul>
+          <li><i class="fas fa-envelope"></i> support@happypaws.in</li>
+          <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+          <li><i class="fas fa-map-marker-alt"></i> Mumbai, Maharashtra</li>
+        </ul></div>
+      </div>
+      <div class="site-footer-bottom">
+        <p>&copy; 2026 HappyPaws. All Rights Reserved.</p>
+        <div class="site-footer-bottom-links"><a href="#">Terms</a><a href="#">Privacy</a></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="../js/cart.js"></script>
+<script src="../js/auth.js"></script>
+<script>
+  var API = 'http://localhost:5000/api';
+  var currentProduct = null;
+
+  var FALLBACKS = [
+    'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=600&q=80',
+    'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600&q=80',
+    'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=600&q=80',
+    'https://images.unsplash.com/photo-1555685812-4b943f1d5f75?w=600&q=80'
+  ];
+
+  // ── Load product ──────────────────────────────────────────────────────────
+  async function loadProduct() {
+    try {
+      var pid = new URLSearchParams(window.location.search).get('id');
+      var url = pid ? (API + '/products/' + pid) : API + '/products';
+      var res = await fetch(url);
+      var data = await res.json();
+      currentProduct = Array.isArray(data) ? data[0] : data;
+      if (currentProduct) renderProduct(currentProduct);
+    } catch(e) { console.error(e); }
+  }
+
+  function renderProduct(p) {
+    document.title = p.title + ' - HappyPaws';
+    document.getElementById('bc-name').textContent    = p.title;
+    document.getElementById('prod-title').textContent = p.title;
+    document.getElementById('prod-desc').textContent  = p.description;
+    document.getElementById('prod-brand').textContent = (p.collection || 'HappyPaws') + ' Premium';
+
+    // Images — show ALL real images, no fallback padding
+    var imgs = Array.isArray(p.images) && p.images.length ? [...p.images] : [FALLBACKS[0]];
+    document.getElementById('main-img').src = imgs[0];
+
+    document.getElementById('thumbs').innerHTML = imgs.map(function(src, i) {
+      return '<div class="thumb' + (i===0?' active':'') + '" data-src="' + src + '">' +
+        '<img src="' + src + '" alt="View ' + (i+1) + '" loading="lazy" /></div>';
+    }).join('');
+    document.querySelectorAll('.thumb').forEach(function(t) {
+      t.addEventListener('click', function() {
+        document.querySelectorAll('.thumb').forEach(function(x){ x.classList.remove('active'); });
+        this.classList.add('active');
+        document.getElementById('main-img').src = this.dataset.src;
+      });
+    });
+
+    // Price
+    document.getElementById('price-now').textContent = '\u20B9' + Number(p.price).toLocaleString('en-IN');
+    if (p.compareAtPrice && p.compareAtPrice > p.price) {
+      document.getElementById('price-old').textContent  = '\u20B9' + Number(p.compareAtPrice).toLocaleString('en-IN');
+      var disc = Math.round((1 - p.price / p.compareAtPrice) * 100);
+      var saveEl = document.getElementById('price-save');
+      saveEl.textContent = 'Save ' + disc + '%';
+      saveEl.style.display = 'inline-block';
+      var badge = document.getElementById('disc-badge');
+      badge.textContent = '-' + disc + '% OFF';
+      badge.style.display = 'block';
+    }
+
+    // Rating
+    var r = Math.round(p.rating || 5);
+    document.getElementById('prod-stars').innerHTML =
+      '<span style="color:#fbbf24">' + '&#9733;'.repeat(r) + '</span>' + '&#9734;'.repeat(5-r);
+    document.getElementById('prod-reviews').textContent = '(' + (p.reviews || 0) + ' reviews)';
+    document.getElementById('avg-num').textContent = p.rating || 5;
+
+    // Rating bars
+    var barsHtml = '';
+    [5,4,3,2,1].forEach(function(s) {
+      var pct = s === r ? 68 : (s === r-1 ? 20 : 5);
+      barsHtml += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:.8rem">' +
+        '<span style="width:12px;color:#64748b;text-align:right">' + s + '</span>' +
+        '<i class="fas fa-star" style="color:#fbbf24;font-size:.7rem"></i>' +
+        '<div style="width:120px;height:7px;background:#e2e8f0;border-radius:4px;overflow:hidden">' +
+          '<div style="width:' + pct + '%;height:100%;background:linear-gradient(90deg,#fbbf24,#f59e0b);border-radius:4px"></div>' +
+        '</div>' +
+        '<span style="color:#94a3b8;width:28px">' + pct + '%</span>' +
+      '</div>';
+    });
+    document.getElementById('rating-bars').innerHTML = barsHtml;
+
+    // Features
+    var feats = [
+      'Premium quality materials for long-lasting durability',
+      'Safe and non-toxic — tested and approved for all pets',
+      'Easy to clean and maintain',
+      'Recommended by veterinarians across India',
+      'Eco-friendly and sustainably sourced'
+    ];
+    document.getElementById('feat-list').innerHTML = feats.map(function(f) {
+      return '<li class="feat-item"><i class="fas fa-check"></i><span>' + f + '</span></li>';
+    }).join('');
+
+    // Reviews
+    var revs = [
+      { name:'Priya S.',  rating:5, text:'My dog absolutely loves this! Great quality and fast delivery. Highly recommend to all pet parents.', date:'2 days ago' },
+      { name:'Arjun M.',  rating:5, text:'Excellent product. Worth every rupee. My pet hasn\'t stopped using it since it arrived!', date:'1 week ago' },
+      { name:'Sneha R.',  rating:4, text:'Good quality, neat packaging. Delivery was quick. Will definitely order again.', date:'2 weeks ago' }
+    ];
+    document.getElementById('reviews-list').innerHTML = revs.map(function(rv) {
+      return '<div class="review-card">' +
+        '<div class="review-top">' +
+          '<div class="rev-avatar">' + rv.name[0] + '</div>' +
+          '<div><div class="rev-name">' + rv.name + '</div><div class="rev-date">' + rv.date + '</div></div>' +
+          '<div class="rev-stars">' + '&#9733;'.repeat(rv.rating) + '&#9734;'.repeat(5-rv.rating) + '</div>' +
+        '</div>' +
+        '<p class="rev-text">' + rv.text + '</p>' +
+      '</div>';
+    }).join('');
+
+    // Related products
+    fetch(API + '/products')
+      .then(function(r){ return r.json(); })
+      .then(function(all) {
+        var related = all.filter(function(x){ return x._id !== p._id; }).slice(0, 4);
+        document.getElementById('related-grid').innerHTML = related.map(function(rp) {
+          var img = Array.isArray(rp.images) && rp.images.length ? rp.images[0] : FALLBACKS[0];
+          return '<div class="product-card" style="cursor:pointer" onclick="window.location.href=\'product.html?id=' + rp._id + '\'">' +
+            '<div class="product-img-wrap"><img src="' + img + '" alt="' + rp.title + '" loading="lazy" /></div>' +
+            '<div class="product-body">' +
+              '<h3>' + rp.title + '</h3>' +
+              '<div class="product-price">' +
+                '<span class="price-current">\u20B9' + Number(rp.price).toLocaleString('en-IN') + '</span>' +
+                (rp.compareAtPrice ? '<span class="price-old">\u20B9' + Number(rp.compareAtPrice).toLocaleString('en-IN') + '</span>' : '') +
+              '</div>' +
+              '<button class="btn btn-primary add-to-cart-btn" data-pid="' + rp._id + '" onclick="event.stopPropagation();cartManager.addToCart(\'' + rp._id + '\',1)">' +
+                '<i class="fas fa-cart-plus"></i> Add to Cart' +
+              '</button>' +
+            '</div>' +
+          '</div>';
+        }).join('');
+      }).catch(function(){});
+  }
+
+  // ── Qty controls ──────────────────────────────────────────────────────────
+  function changeQty(delta) {
+    var el = document.getElementById('qty');
+    var v = parseInt(el.value) + delta;
+    if (v >= 1) el.value = v;
+  }
+
+  // ── Add to cart ───────────────────────────────────────────────────────────
+  function addToCart() {
+    var qty = parseInt(document.getElementById('qty').value) || 1;
+    if (currentProduct && typeof cartManager !== 'undefined') {
+      cartManager.addToCart(currentProduct._id, qty);
+    }
+  }
+
+  // ── Color selector ────────────────────────────────────────────────────────
+  document.querySelectorAll('.cdot').forEach(function(d) {
+    d.addEventListener('click', function() {
+      document.querySelectorAll('.cdot').forEach(function(x){ x.classList.remove('active'); });
+      this.classList.add('active');
+      document.getElementById('color-name').textContent = this.dataset.color;
+    });
+  });
+
+  window.addEventListener('scroll', function(){
+    document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  loadProduct();
+</script>
+</body>
+</html>

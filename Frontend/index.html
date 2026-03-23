@@ -1,0 +1,524 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#x1F43E;</text></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HappyPaws - Premium Pet Products</title>
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+
+    <!-- ===== STICKY HEADER ===== -->
+    <header class="header" id="main-header">
+      <a href="index.html" class="logo">
+        <div class="paw-icon">&#x1F43E;</div>
+        Happy<span>Paws</span>
+      </a>
+
+      <nav>
+        <a href="index.html" class="active">Home</a>
+        <a href="pages/shop.html">Shop</a>
+        <a href="pages/about.html">About</a>
+        <a href="pages/contact.html">Contact</a>
+      </nav>
+
+      <div class="header-icons">
+        <button
+          class="icon-btn"
+          title="Search"
+          onclick="window.location.href='pages/search-results.html'"
+        >
+          <i class="fas fa-search"></i>
+        </button>
+        <button
+          class="icon-btn"
+          title="Cart"
+          onclick="window.location.href='pages/cart.html'"
+        >
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-badge" id="cart-count" style="display:none">0</span>
+        </button>
+        <button
+          class="btn-login btn"
+          onclick="window.location.href='pages/login.html'"
+        >
+          <i class="fas fa-sign-in-alt"></i> Login
+        </button>
+        <button
+          class="btn-signup"
+          onclick="window.location.href='pages/signup.html'"
+        >
+          <i class="fas fa-user-plus"></i> Sign Up
+        </button>
+      </div>
+    </header>
+
+    <!-- ===== PAGE SHELL ===== -->
+    <div class="page-shell">
+
+      <!-- ===== HERO ===== -->
+      <section class="hero">
+        <div class="hero-text">
+          <span class="hero-badge">&#x1F43E; New Collection 2026</span>
+          <h1>
+            Premium Products for<br />
+            <span class="highlight">Happy Pets</span>
+          </h1>
+          <p class="hero-description">
+            Give your furry friends the best care they deserve with our
+            curated selection of premium pet products � trusted by 10,000+
+            pet parents.
+          </p>
+          <div class="hero-buttons">
+            <button
+              class="btn btn-accent btn-lg"
+              onclick="window.location.href='pages/shop.html'"
+            >
+              <i class="fas fa-shopping-bag"></i> Shop Now
+            </button>
+            <button
+              class="btn btn-outline-white btn-lg"
+              onclick="window.location.href='pages/about.html'"
+            >
+              <i class="fas fa-play-circle"></i> Learn More
+            </button>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-item">
+              <div class="stat-number">10K+</div>
+              <div class="stat-label">Happy Customers</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">500+</div>
+              <div class="stat-label">Products</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">4.9&#x2B50;</div>
+              <div class="stat-label">Avg Rating</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-image-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=800&q=80"
+            alt="Happy Dog"
+            class="hero-img"
+          />
+          <div class="hero-offer-badge">
+            <div>
+              <span class="discount">50% OFF</span>
+              <span class="offer-text">First Order</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ===== CATEGORIES ===== -->
+      <section class="section-wrap animate-fade-up">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="section-subtitle">Browse Categories</span>
+            <h2>&#x1F6D2; Shop by Category</h2>
+            <p>Find the perfect products for your furry friend</p>
+          </div>
+          <a href="pages/shop.html" class="view-all-link">
+            View All <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="category-grid" id="category-grid">
+          <div class="loading-container">
+            <div class="spinner"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== BEST SELLERS ===== -->
+      <section class="section-wrap animate-fade-up delay-1">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="section-subtitle">Popular Products</span>
+            <h2>&#x1F525; Best Sellers</h2>
+            <p>Our most loved products by pet parents</p>
+          </div>
+          <a href="pages/shop.html" class="view-all-link">
+            See All <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="product-grid" id="product-grid">
+          <div class="loading-container">
+            <div class="spinner"></div>
+          </div>
+        </div>
+
+        <div class="center-btn">
+          <button
+            class="btn btn-primary btn-lg"
+            onclick="window.location.href='pages/shop.html'"
+          >
+            View All Products <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- ===== WHY CHOOSE US ===== -->
+      <section class="section-wrap animate-fade-up delay-2">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="section-subtitle">Why Choose Us</span>
+            <h2>&#x2B50; The HappyPaws Advantage</h2>
+            <p>We're committed to providing the best for your pets</p>
+          </div>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <span class="feature-icon">&#x1F69A;</span>
+            <h3>Fast Shipping</h3>
+            <p>Free delivery on orders over &#x20B9;499. Same-day dispatch for orders before 2 PM.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-icon">&#x1F512;</span>
+            <h3>Secure Payment</h3>
+            <p>100% secure payment processing with encryption and fraud protection.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-icon">&#x2B50;</span>
+            <h3>Premium Quality</h3>
+            <p>Curated selection of premium products from trusted brands worldwide.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-icon">&#x1F4DE;</span>
+            <h3>24/7 Support</h3>
+            <p>Expert pet care advice and customer support available around the clock.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-icon">&#x1F504;</span>
+            <h3>Easy Returns</h3>
+            <p>30-day hassle-free return policy. Your satisfaction is guaranteed.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-icon">&#x1F381;</span>
+            <h3>Rewards Program</h3>
+            <p>Earn points on every purchase and get exclusive discounts.</p>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ===== FEATURED PRODUCT ===== -->
+      <section class="featured-section animate-fade-up delay-3">
+        <div class="featured-content">
+          <div class="featured-tag">&#x2B50; Featured Product</div>
+          <h2>Smart Pet Water Bottle</h2>
+          <p>
+            Keep your pet hydrated on the go with our innovative smart water
+            bottle featuring temperature control and LED indicator.
+          </p>
+
+          <div class="featured-features">
+            <div class="feature-item">
+              <i class="fas fa-tint"></i>
+              <span>500ml Capacity</span>
+            </div>
+            <div class="feature-item">
+              <i class="fas fa-temperature-low"></i>
+              <span>Temperature Control</span>
+            </div>
+            <div class="feature-item">
+              <i class="fas fa-battery-full"></i>
+              <span>Long Battery Life</span>
+            </div>
+          </div>
+
+          <div class="featured-price">
+            <span class="current">&#x20B9;1,999</span>
+            <span class="old">&#x20B9;3,299</span>
+            <span class="save">Save 39%</span>
+          </div>
+
+          <div class="featured-btns">
+            <button class="btn btn-accent btn-lg">
+              <i class="fas fa-cart-plus"></i> Add to Cart
+            </button>
+            <button class="btn btn-outline-white btn-lg">
+              <i class="far fa-heart"></i> Wishlist
+            </button>
+          </div>
+        </div>
+
+        <div class="featured-img-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=800&q=80"
+            alt="Smart Water Bottle"
+            class="featured-img"
+          />
+        </div>
+      </section>
+
+      <!-- ===== REVIEWS ===== -->
+      <section class="section-wrap animate-fade-up delay-4">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="section-subtitle">Testimonials</span>
+            <h2>&#x1F4AC; What Pet Parents Say</h2>
+            <p>Real reviews from verified customers</p>
+          </div>
+        </div>
+
+        <div class="reviews-grid" id="reviews-grid">
+          <!-- Loaded dynamically -->
+        </div>
+      </section>
+
+      <!-- ===== NEWSLETTER ===== -->
+      <section class="newsletter-section animate-fade-up delay-5">
+        <div class="newsletter-text">
+          <h2>&#x1F4E7; Join Our Newsletter</h2>
+          <p>Subscribe to get special offers, free giveaways, and exclusive deals!</p>
+
+          <form class="newsletter-form" id="newsletter-form">
+            <input
+              type="email"
+              placeholder="Enter your email address"
+              required
+            />
+            <button type="submit" class="btn btn-accent btn-lg">
+              Subscribe <i class="fas fa-paper-plane"></i>
+            </button>
+          </form>
+
+          <div class="newsletter-benefits">
+            <div class="benefit-item">
+              <i class="fas fa-gift"></i>
+              <span>Get 10% Off First Order</span>
+            </div>
+            <div class="benefit-item">
+              <i class="fas fa-envelope"></i>
+              <span>Weekly Deals &amp; Tips</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="newsletter-img-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=600&q=80"
+            alt="Newsletter"
+            class="newsletter-img"
+          />
+        </div>
+      </section>
+
+    </div><!-- end .page-shell -->
+
+
+    <!-- ===== FOOTER ===== -->
+    <div class="footer-wrap">
+      <div class="footer-inner">
+        <div class="footer-grid">
+
+          <div class="footer-brand">
+            <div class="logo">
+              <div class="paw-icon">&#x1F43E;</div>
+              Happy<span>Paws</span>
+            </div>
+            <p>
+              Your pet's happiness is our priority. Quality products for
+              happy, healthy pets � trusted by thousands of pet parents.
+            </p>
+            <div class="social-links">
+              <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+              <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="social-link"><i class="fab fa-pinterest-p"></i></a>
+            </div>
+          </div>
+
+          <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+              <li><a href="pages/shop.html"><i class="fas fa-chevron-right"></i> Shop</a></li>
+              <li><a href="pages/about.html"><i class="fas fa-chevron-right"></i> About</a></li>
+              <li><a href="pages/contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Customer Service</h4>
+            <ul>
+              <li><a href="#"><i class="fas fa-chevron-right"></i> Shipping Info</a></li>
+              <li><a href="#"><i class="fas fa-chevron-right"></i> Returns</a></li>
+              <li><a href="#"><i class="fas fa-chevron-right"></i> FAQ</a></li>
+              <li><a href="#"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Contact Us</h4>
+            <ul>
+              <li><i class="fas fa-envelope"></i> support@happypaws.in</li>
+              <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+              <li><i class="fas fa-map-marker-alt"></i> Mumbai, Maharashtra, India</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2026 HappyPaws. All Rights Reserved. Made with &#x2764;&#xFE0F; for pets.</p>
+          <div class="footer-bottom-links">
+            <a href="#">Terms</a>
+            <a href="#">Privacy</a>
+            <a href="#">Cookies</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script src="js/cart.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+      // Sticky header shadow on scroll
+      window.addEventListener('scroll', () => {
+        const header = document.getElementById('main-header');
+        header.classList.toggle('scrolled', window.scrollY > 50);
+      });
+
+      // Newsletter form
+      document.getElementById('newsletter-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const btn = e.target.querySelector('button');
+        btn.innerHTML = '<i class="fas fa-check"></i> Subscribed!';
+        btn.style.background = 'linear-gradient(135deg,#16a34a,#15803d)';
+        setTimeout(() => {
+          btn.innerHTML = 'Subscribe <i class="fas fa-paper-plane"></i>';
+          btn.style.background = '';
+          e.target.reset();
+        }, 3000);
+      });
+
+      // Dynamic reviews
+      const reviewsData = [
+        { name: 'Sarah M.', rating: 5, text: 'My dog absolutely loves the chew toys! Great quality and fast shipping. Will definitely order again.', date: '2 days ago' },
+        { name: 'James K.', rating: 5, text: 'The Cloud Pet Bed is amazing. My cat hasn\'t left it since it arrived. Worth every penny!', date: '1 week ago' },
+        { name: 'Emily R.', rating: 4, text: 'Excellent grooming set. The brush is so gentle and my pup actually enjoys grooming time now.', date: '2 weeks ago' },
+      ];
+
+      const reviewsGrid = document.getElementById('reviews-grid');
+      if (reviewsGrid) {
+        reviewsGrid.innerHTML = reviewsData.map(r => `
+          <div class="review-card animate-fade-up">
+            <div class="review-header">
+              <div class="reviewer-avatar">${r.name.charAt(0)}</div>
+              <div class="reviewer-info">
+                <h4>${r.name}</h4>
+                <span>${r.date}</span>
+              </div>
+            </div>
+            <div class="review-stars">${'&#x2B50;'.repeat(r.rating)}${'&#x2606;'.repeat(5 - r.rating)}</div>
+            <p class="review-text">${r.text}</p>
+          </div>
+        `).join('');
+      }
+
+      // Dynamic categories fallback
+      const categoryGrid = document.getElementById('category-grid');
+      const staticCategories = [
+        { name: 'Dog Toys', img: 'https://images.unsplash.com/photo-1555685812-4b943f1d5f75?auto=format&fit=crop&w=600&q=80', count: '24 items' },
+        { name: 'Pet Grooming', img: 'https://images.unsplash.com/photo-1543852786-1cf6624b9987?auto=format&fit=crop&w=600&q=80', count: '18 items' },
+        { name: 'Accessories', img: 'https://images.unsplash.com/photo-1572980697803-0f6f3810f1a5?auto=format&fit=crop&w=600&q=80', count: '32 items' },
+      ];
+
+      // Dynamic products fallback
+      const productGrid = document.getElementById('product-grid');
+      const staticProducts = [
+        { title: 'Whirl Chew Toy', price: 1999, old: 2999, rating: 5, reviews: 128, badge: 'Best Seller', img: 'https://images.unsplash.com/photo-1555685812-4b943f1d5f75?auto=format&fit=crop&w=600&q=80' },
+        { title: 'Cloud Pet Bed', price: 3999, old: 5499, rating: 5, reviews: 94, badge: 'New', img: 'https://images.unsplash.com/photo-1572980697803-0f6f3810f1a5?auto=format&fit=crop&w=600&q=80' },
+        { title: 'Eco Grooming Set', price: 2799, old: 3599, rating: 4, reviews: 67, badge: 'Sale', img: 'https://images.unsplash.com/photo-1543852786-1cf6624b9987?auto=format&fit=crop&w=600&q=80' },
+        { title: 'Smart Water Bottle', price: 1999, old: 3299, rating: 5, reviews: 234, badge: 'Featured', img: 'https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=600&q=80' },
+      ];
+
+      function renderCategories(cats) {
+        categoryGrid.innerHTML = cats.map(c => `
+          <div class="category-card" onclick="window.location.href='pages/shop.html'">
+            <img src="${c.img}" alt="${c.name}" loading="lazy" />
+            <div class="category-card-body">
+              <p>${c.name}</p>
+              <span>${c.count}</span>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function renderProducts(prods) {
+        productGrid.innerHTML = prods.map(p => `
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <img src="${p.img}" alt="${p.title}" loading="lazy" />
+              <span class="product-badge">${p.badge}</span>
+              <button class="product-wishlist"><i class="far fa-heart"></i></button>
+            </div>
+            <div class="product-body">
+              <h3>${p.title}</h3>
+              <div class="stars">${'&#x2B50;'.repeat(p.rating)}${'&#x2606;'.repeat(5-p.rating)} <span>(${p.reviews})</span></div>
+              <div class="product-price">
+                <span class="price-current">&#8377;${p.price.toFixed(2)}</span>
+                <span class="price-old">&#8377;${p.old.toFixed(2)}</span>
+              </div>
+              <button class="btn btn-primary add-to-cart-btn" data-pid="${p._id || p.id || ''}" onclick="event.stopPropagation();handleAddToCart(this)">
+                <i class="fas fa-cart-plus"></i> Add to Cart
+              </button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // Try API first, fall back to static data
+      fetch('http://localhost:5000/api/products')
+        .then(r => r.json())
+        .then(data => {
+          if (data && data.length) {
+            renderProducts(data.slice(0, 4).map(p => ({
+              title: p.title, price: p.price, old: p.compareAtPrice || p.price,
+              rating: Math.round(p.rating || 5), reviews: p.reviews || 0,
+              badge: 'Popular', img: (p.images || p.image || [''])[0] || p.image
+            })));
+          } else { renderProducts(staticProducts); }
+        })
+        .catch(() => renderProducts(staticProducts));
+
+      fetch('http://localhost:5000/api/collections')
+        .then(r => r.json())
+        .then(data => {
+          if (data && data.length) {
+            renderCategories(data.map((c, i) => ({
+              name: c.name, count: '20+ items',
+              img: staticCategories[i % staticCategories.length].img
+            })));
+          } else { renderCategories(staticCategories); }
+        })
+        .catch(() => renderCategories(staticCategories));
+    </script>
+
+  </body>
+</html>

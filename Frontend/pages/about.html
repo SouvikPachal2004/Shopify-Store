@@ -1,0 +1,774 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#x1F43E;</text></svg>" />About Us - HappyPaws | Our Story</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* About Page Styles */
+        .about-page-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* Hero Section */
+        .about-hero-section {
+            text-align: center;
+            padding: 80px 24px;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #1e3a8a 100%);
+            border-radius: 24px;
+            margin-bottom: 80px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>');
+            background-size: 50px 50px;
+        }
+
+        .about-hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .about-title-main {
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .about-subtitle-text {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            opacity: 0.95;
+            line-height: 1.8;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Story Section */
+        .our-story-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-bottom: 100px;
+        }
+
+        .story-image-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .story-img-item {
+            border-radius: 16px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .story-img-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .story-img-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .story-img-large {
+            grid-column: span 2;
+            aspect-ratio: 2/1;
+        }
+
+        .story-content h2 {
+            font-size: 42px;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 25px;
+            line-height: 1.2;
+        }
+
+        .story-content p {
+            font-size: 17px;
+            line-height: 1.9;
+            color: #475569;
+            margin-bottom: 20px;
+        }
+
+        /* Mission Section */
+        .mission-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 80px 40px;
+            border-radius: 24px;
+            margin-bottom: 100px;
+        }
+
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .mission-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .mission-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .mission-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+        }
+
+        .mission-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 15px;
+        }
+
+        .mission-description {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #64748b;
+        }
+
+        /* Team Section */
+        .team-section {
+            margin-bottom: 100px;
+        }
+
+        .section-header-center {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-label {
+            display: inline-block;
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            color: #2563eb;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: 42px;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .team-member-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .team-member-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .member-image {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        }
+
+        .member-info {
+            padding: 30px;
+        }
+
+        .member-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .member-role {
+            font-size: 15px;
+            color: #2563eb;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .member-bio {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+        .social-links-member {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .social-link-member {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2563eb;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .social-link-member:hover {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* Values Section */
+        .values-section {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            padding: 80px 40px;
+            border-radius: 24px;
+            margin-bottom: 100px;
+            color: white;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .value-item {
+            text-align: center;
+        }
+
+        .value-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 25px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        .value-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .value-desc {
+            font-size: 15px;
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 80px 40px;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 24px;
+            margin-bottom: 80px;
+        }
+
+        .cta-title {
+            font-size: 42px;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 20px;
+        }
+
+        .cta-subtitle {
+            font-size: 18px;
+            color: #64748b;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary-cta {
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary-cta:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-outline-cta {
+            padding: 18px 40px;
+            background: white;
+            border: 2px solid #cbd5e1;
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #475569;
+        }
+
+        .btn-outline-cta:hover {
+            border-color: #2563eb;
+            color: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .about-title-main {
+                font-size: 36px;
+            }
+
+            .our-story-section {
+                grid-template-columns: 1fr;
+            }
+
+            .story-image-grid {
+                order: 2;
+            }
+
+            .story-content {
+                order: 1;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-shell">
+        <!-- Header -->
+        <header class="header">
+  <div class="logo">🐾 Happy<span>Paws</span></div>
+  <nav>
+    <a href="../index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="product.html">Product</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="icons">
+    <i class="fas fa-search" onclick="window.location.href='search-results.html'"></i>
+    <i class="fas fa-shopping-cart" onclick="window.location.href='cart.html'"></i>
+    <i class="fas fa-user" onclick="window.location.href='login.html'"></i>
+  </div>
+</header>
+
+        <!-- About Page Content -->
+        <div class="about-page-wrapper">
+            <!-- Hero Section -->
+            <section class="about-hero-section">
+                <div class="about-hero-content">
+                    <span class="about-badge">🎉 Since 2020</span>
+                    <h1 class="about-title-main">Your Pet's Best Friend</h1>
+                    <p class="about-subtitle-text">
+                        We're passionate about providing premium products that keep pets happy, healthy, and loved every single day.
+                    </p>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number">10K+</div>
+                            <div class="stat-label">Happy Customers</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Products</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">5+</div>
+                            <div class="stat-label">Years Experience</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">99%</div>
+                            <div class="stat-label">Satisfaction Rate</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Our Story Section -->
+            <section class="our-story-section">
+                <div class="story-image-grid">
+                    <div class="story-img-item story-img-large">
+                        <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=800&q=80" alt="Happy Dog">
+                    </div>
+                    <div class="story-img-item">
+                        <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400&q=80" alt="Cat">
+                    </div>
+                    <div class="story-img-item">
+                        <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=400&q=80" alt="Pet Care">
+                    </div>
+                </div>
+                
+                <div class="story-content">
+                    <h2>Our Story</h2>
+                    <p>
+                        HappyPaws was born from a simple belief: every pet deserves the very best. Founded in 2020 by a team of pet lovers, we set out to create a one-stop destination for premium pet products.
+                    </p>
+                    <p>
+                        What started as a small online store has grown into a thriving community of over 10,000 happy customers who trust us with their furry friends' needs.
+                    </p>
+                    <p>
+                        We carefully curate our collection to ensure every product meets our high standards for quality, safety, and value. From nutritious food to engaging toys and comfortable accessories, we're here to support pet parents every step of the way.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Mission Section -->
+            <section class="mission-section">
+                <div class="section-header-center">
+                    <span class="section-label">Our Mission</span>
+                    <h2 class="section-title">Why We Do What We Do</h2>
+                    <p class="section-subtitle">
+                        We're driven by a passion for pets and a commitment to excellence
+                    </p>
+                </div>
+
+                <div class="mission-grid">
+                    <div class="mission-card">
+                        <div class="mission-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3 class="mission-title">Quality First</h3>
+                        <p class="mission-description">
+                            Every product is carefully selected to meet our rigorous quality standards.
+                        </p>
+                    </div>
+                    <div class="mission-card">
+                        <div class="mission-icon">
+                            <i class="fas fa-paw"></i>
+                        </div>
+                        <h3 class="mission-title">Pet-Centric</h3>
+                        <p class="mission-description">
+                            We put pets first in everything we do, from product selection to customer service.
+                        </p>
+                    </div>
+                    <div class="mission-card">
+                        <div class="mission-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <h3 class="mission-title">Fast Delivery</h3>
+                        <p class="mission-description">
+                            Quick and reliable shipping so your pets get what they need when they need it.
+                        </p>
+                    </div>
+                    <div class="mission-card">
+                        <div class="mission-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="mission-title">Expert Support</h3>
+                        <p class="mission-description">
+                            Our team of pet experts is always ready to help with questions and advice.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Team Section -->
+            <section class="team-section">
+                <div class="section-header-center">
+                    <span class="section-label">Our Team</span>
+                    <h2 class="section-title">Meet the Pet Lovers Behind HappyPaws</h2>
+                    <p class="section-subtitle">
+                        A dedicated team working tirelessly to keep your pets happy
+                    </p>
+                </div>
+
+                <div class="team-grid">
+                    <div class="team-member-card">
+                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop" alt="CEO" class="member-image">
+                        <div class="member-info">
+                            <h3 class="member-name">John Smith</h3>
+                            <p class="member-role">Founder & CEO</p>
+                            <p class="member-bio">
+                                Pet enthusiast with 15+ years in e-commerce. Dad to 3 golden retrievers.
+                            </p>
+                            <div class="social-links-member">
+                                <a href="#" class="social-link-member"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" class="social-link-member"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member-card">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop" alt="CTO" class="member-image">
+                        <div class="member-info">
+                            <h3 class="member-name">Sarah Johnson</h3>
+                            <p class="member-role">Head of Operations</p>
+                            <p class="member-bio">
+                                Ensures smooth operations and happy customers. Mom to 2 rescue cats.
+                            </p>
+                            <div class="social-links-member">
+                                <a href="#" class="social-link-member"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" class="social-link-member"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member-card">
+                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=400&fit=crop" alt="Product Manager" class="member-image">
+                        <div class="member-info">
+                            <h3 class="member-name">Mike Chen</h3>
+                            <p class="member-role">Product Curator</p>
+                            <p class="member-bio">
+                                Selects the best products for our store. Proud parent of an energetic beagle.
+                            </p>
+                            <div class="social-links-member">
+                                <a href="#" class="social-link-member"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" class="social-link-member"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member-card">
+                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop" alt="Customer Support" class="member-image">
+                        <div class="member-info">
+                            <h3 class="member-name">Emily Davis</h3>
+                            <p class="member-role">Customer Success</p>
+                            <p class="member-bio">
+                            Leads our support team to ensure every customer has a great experience.
+                            </p>
+                            <div class="social-links-member">
+                                <a href="#" class="social-link-member"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" class="social-link-member"><i class="fab fa-facebook"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Values Section -->
+            <section class="values-section">
+                <div class="section-header-center" style="color: white;">
+                    <h2 class="section-title" style="color: white;">Our Core Values</h2>
+                    <p class="section-subtitle" style="opacity: 0.9;">
+                        The principles that guide everything we do
+                    </p>
+                </div>
+
+                <div class="values-grid">
+                    <div class="value-item">
+                        <div class="value-icon">🏆</div>
+                        <h3 class="value-title">Excellence</h3>
+                        <p class="value-desc">We never compromise on quality</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">💚</div>
+                        <h3 class="value-title">Care</h3>
+                        <p class="value-desc">Genuine love for all animals</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">🤝</div>
+                        <h3 class="value-title">Trust</h3>
+                        <p class="value-desc">Honest and transparent service</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">🌱</div>
+                        <h3 class="value-title">Innovation</h3>
+                        <p class="value-desc">Always improving for better care</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA Section -->
+            <section class="cta-section">
+                <h2 class="cta-title">Ready to Make Your Pet Happy?</h2>
+                <p class="cta-subtitle">
+                    Join thousands of satisfied pet parents and discover the HappyPaws difference today!
+                </p>
+                <div class="cta-buttons">
+                    <a href="shop.html" class="btn-primary-cta">
+                        <i class="fas fa-shopping-bag"></i> Shop Now
+                    </a>
+                    <a href="contact.html" class="btn-outline-cta">
+                        <i class="fas fa-envelope"></i> Contact Us
+                    </a>
+                </div>
+            </section>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer enhanced">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>🐾 HappyPaws</h3>
+                    <p>Your pet's happiness is our priority.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> support@happypaws.com</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 HappyPaws. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/app.js"></script>
+    <script src="../js/cart.js"></script>
+</body>
+</html>

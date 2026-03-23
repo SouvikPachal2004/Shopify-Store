@@ -1,0 +1,41 @@
+[
+  {
+    "id": "p1",
+    "title": "Whirl Chew Toy",
+    "description": "Durable, non-toxic rubber chew toy for dogs. Helps reduce boredom and clean teeth.",
+    "price": 24.99,
+    "compareAtPrice": 34.99,
+    "inventory": 120,
+    "sku": "WM-1001",
+    "tags": ["dog", "toy", "chew"],
+    "images": [
+      "https://images.unsplash.com/photo-1555685812-4b943f1d5f75?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=600&q=80"
+    ],
+    "collection": "Dog Toys"
+  },
+  {
+    "id": "p2",
+    "title": "Cloud Pet Bed",
+    "description": "Soft, supportive bed for restful pet sleep. Machine washable cover.",
+    "price": 49.00,
+    "compareAtPrice": 69.00,
+    "inventory": 65,
+    "sku": "WM-1002",
+    "tags": ["bed", "comfort", "sleep"],
+    "images": ["https://images.unsplash.com/photo-1572980697803-0f6f3810f1a5?auto=format&fit=crop&w=900&q=80"],
+    "collection": "Accessories"
+  },
+  {
+    "id": "p3",
+    "title": "Eco Grooming Set",
+    "description": "Complete grooming kit with natural brush, shampoo, and nail file.",
+    "price": 34.50,
+    "compareAtPrice": 44.50,
+    "inventory": 80,
+    "sku": "WM-1003",
+    "tags": ["grooming", "care", "wellness"],
+    "images": ["https://images.unsplash.com/photo-1543852786-1cf6624b9987?auto=format&fit=crop&w=900&q=80"],
+    "collection": "Pet Grooming"
+  }
+]

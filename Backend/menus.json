@@ -1,0 +1,4 @@
+{
+  "mainMenu": ["Home", "Shop", "Collections", "About", "Contact"],
+  "footerMenu": ["FAQ", "Shipping Policy", "Returns Policy", "Privacy Policy"]
+}

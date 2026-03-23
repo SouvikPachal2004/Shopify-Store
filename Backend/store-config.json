@@ -1,0 +1,8 @@
+{
+  "storeName": "PawMood Store",
+  "timezone": "America/New_York",
+  "currency": "USD",
+  "storeEmail": "support@pawmood.com",
+  "passwordProtection": true,
+  "password": "petstore123"
+}

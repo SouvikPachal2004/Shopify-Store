@@ -1,0 +1,506 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#x1F43E;</text></svg>" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout - HappyPaws</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <style>
+    .checkout-wrap { display:grid; grid-template-columns:1fr 380px; gap:28px; margin-top:28px; }
+    .checkout-card { background:#fff; border-radius:16px; box-shadow:0 4px 24px rgba(15,23,42,.07); border:1px solid #e2e8f0; padding:28px; margin-bottom:20px; }
+    .checkout-card h2 { font-size:1.05rem; font-weight:700; color:#0f172a; margin-bottom:20px; display:flex; align-items:center; gap:10px; }
+    .checkout-card h2 i { width:32px; height:32px; background:linear-gradient(135deg,#2563eb,#7c3aed); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:.85rem; }
+    .form-row { display:grid; gap:14px; }
+    .form-row.cols-2 { grid-template-columns:1fr 1fr; }
+    .form-row.cols-3 { grid-template-columns:1fr 1fr 1fr; }
+    .form-group { display:flex; flex-direction:column; gap:5px; }
+    .form-group label { font-size:.8rem; font-weight:600; color:#475569; }
+    .form-group input, .form-group select, .form-group textarea {
+      padding:11px 14px; border:1.5px solid #e2e8f0; border-radius:10px;
+      font-family:Poppins,sans-serif; font-size:.88rem; color:#0f172a;
+      outline:none; transition:border-color .2s, box-shadow .2s; background:#fff;
+    }
+    .form-group input:focus, .form-group select:focus { border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.1); }
+    .phone-wrap { display:flex; gap:0; }
+    .phone-prefix { padding:11px 12px; background:#f1f5f9; border:1.5px solid #e2e8f0; border-right:none; border-radius:10px 0 0 10px; font-size:.88rem; font-weight:600; color:#475569; white-space:nowrap; }
+    .phone-wrap input { border-radius:0 10px 10px 0; flex:1; }
+    .payment-options { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:18px; }
+    .pay-option { border:2px solid #e2e8f0; border-radius:12px; padding:14px 16px; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:10px; }
+    .pay-option:hover { border-color:#2563eb; background:#f0f7ff; }
+    .pay-option.active { border-color:#2563eb; background:#eff6ff; }
+    .pay-option input[type=radio] { accent-color:#2563eb; width:16px; height:16px; }
+    .pay-option-label { font-size:.88rem; font-weight:600; color:#0f172a; }
+    .pay-option-sub { font-size:.72rem; color:#64748b; }
+    .pay-panel { display:none; }
+    .pay-panel.active { display:block; }
+    .upi-input-wrap { display:flex; gap:10px; align-items:flex-end; }
+    .upi-input-wrap input { flex:1; }
+    .upi-input-wrap button { padding:11px 18px; background:var(--primary); color:#fff; border:none; border-radius:10px; font-family:Poppins,sans-serif; font-size:.85rem; font-weight:600; cursor:pointer; white-space:nowrap; }
+    .netbanking-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+    .bank-btn { border:1.5px solid #e2e8f0; border-radius:10px; padding:10px 6px; text-align:center; cursor:pointer; font-size:.72rem; font-weight:600; color:#334155; transition:all .2s; background:#fff; }
+    .bank-btn:hover, .bank-btn.active { border-color:#2563eb; background:#eff6ff; color:#2563eb; }
+    .order-summary-card { background:#fff; border-radius:16px; box-shadow:0 4px 24px rgba(15,23,42,.07); border:1px solid #e2e8f0; padding:24px; position:sticky; top:90px; }
+    .order-summary-card h2 { font-size:1.05rem; font-weight:700; color:#0f172a; margin-bottom:18px; }
+    .summary-items { max-height:260px; overflow-y:auto; margin-bottom:16px; }
+    .summary-item { display:flex; gap:12px; padding:10px 0; border-bottom:1px solid #f1f5f9; }
+    .summary-item img { width:56px; height:56px; object-fit:cover; border-radius:10px; flex-shrink:0; }
+    .summary-item-info h4 { font-size:.83rem; font-weight:600; color:#0f172a; margin-bottom:3px; }
+    .summary-item-info p { font-size:.75rem; color:#64748b; }
+    .summary-item-price { margin-left:auto; font-size:.88rem; font-weight:700; color:#0f172a; white-space:nowrap; }
+    .summary-row { display:flex; justify-content:space-between; padding:8px 0; font-size:.88rem; color:#475569; }
+    .summary-row.total { font-size:1.05rem; font-weight:800; color:#0f172a; border-top:2px solid #e2e8f0; margin-top:6px; padding-top:14px; }
+    .place-order-btn { width:100%; padding:15px; background:linear-gradient(135deg,#2563eb,#7c3aed); color:#fff; border:none; border-radius:12px; font-family:Poppins,sans-serif; font-size:1rem; font-weight:700; cursor:pointer; transition:opacity .2s, transform .2s; margin-top:16px; display:flex; align-items:center; justify-content:center; gap:8px; }
+    .place-order-btn:hover { opacity:.92; transform:translateY(-1px); }
+    .secure-note { text-align:center; font-size:.75rem; color:#94a3b8; margin-top:10px; display:flex; align-items:center; justify-content:center; gap:5px; }
+    @media(max-width:900px){ .checkout-wrap{grid-template-columns:1fr;} .order-summary-card{position:relative;top:0;} }
+    @media(max-width:540px){ .form-row.cols-2,.form-row.cols-3{grid-template-columns:1fr;} .payment-options{grid-template-columns:1fr;} .netbanking-grid{grid-template-columns:repeat(2,1fr);} }
+  </style>
+</head>
+<body>
+<div class="page-shell">
+
+  <!-- HEADER -->
+  <header class="header" id="main-header">
+    <a href="../index.html" class="logo"><div class="paw-icon">🐾</div>Happy<span>Paws</span></a>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="header-icons">
+      <button class="icon-btn" onclick="window.location.href='cart.html'">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-badge" id="cart-count" style="display:none">0</span>
+      </button>
+      <button class="btn-login btn" onclick="window.location.href='login.html'"><i class="fas fa-sign-in-alt"></i> Login</button>
+      <button class="btn-signup" onclick="window.location.href='signup.html'"><i class="fas fa-user-plus"></i> Sign Up</button>
+    </div>
+  </header>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <span class="page-hero-tag">🔒 Secure Checkout</span>
+      <h1>Complete Your Order</h1>
+      <p>Fast, safe and easy checkout — delivered across India</p>
+    </div>
+  </div>
+
+  <!-- CHECKOUT LAYOUT -->
+  <div class="checkout-wrap">
+    <form id="checkout-form">
+
+      <!-- CONTACT INFO -->
+      <div class="checkout-card">
+        <h2><i class="fas fa-user"></i> Contact Information</h2>
+        <div class="form-row cols-2">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input name="name" type="text" placeholder="Rahul Sharma" required />
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input name="email" type="email" placeholder="rahul@example.com" required />
+          </div>
+        </div>
+        <div class="form-row" style="margin-top:14px">
+          <div class="form-group">
+            <label>Mobile Number</label>
+            <div class="phone-wrap">
+              <span class="phone-prefix">🇮🇳 +91</span>
+              <input name="phone" type="tel" placeholder="98765 43210" maxlength="10" pattern="[0-9]{10}" required />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SHIPPING ADDRESS -->
+      <div class="checkout-card">
+        <h2><i class="fas fa-map-marker-alt"></i> Delivery Address</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Flat / House No., Building, Street</label>
+            <input name="address" type="text" placeholder="e.g. 12B, Sunshine Apartments, MG Road" required />
+          </div>
+        </div>
+        <div class="form-row" style="margin-top:14px">
+          <div class="form-group">
+            <label>Area / Locality (optional)</label>
+            <input name="address2" type="text" placeholder="e.g. Koramangala" />
+          </div>
+        </div>
+        <div class="form-row cols-3" style="margin-top:14px">
+          <div class="form-group">
+            <label>City / Town</label>
+            <input name="city" type="text" placeholder="Bengaluru" required />
+          </div>
+          <div class="form-group">
+            <label>State / UT</label>
+            <select name="state" required>
+              <option value="">Select State</option>
+              <optgroup label="States">
+                <option>Andhra Pradesh</option>
+                <option>Arunachal Pradesh</option>
+                <option>Assam</option>
+                <option>Bihar</option>
+                <option>Chhattisgarh</option>
+                <option>Goa</option>
+                <option>Gujarat</option>
+                <option>Haryana</option>
+                <option>Himachal Pradesh</option>
+                <option>Jharkhand</option>
+                <option>Karnataka</option>
+                <option>Kerala</option>
+                <option>Madhya Pradesh</option>
+                <option>Maharashtra</option>
+                <option>Manipur</option>
+                <option>Meghalaya</option>
+                <option>Mizoram</option>
+                <option>Nagaland</option>
+                <option>Odisha</option>
+                <option>Punjab</option>
+                <option>Rajasthan</option>
+                <option>Sikkim</option>
+                <option>Tamil Nadu</option>
+                <option>Telangana</option>
+                <option>Tripura</option>
+                <option>Uttar Pradesh</option>
+                <option>Uttarakhand</option>
+                <option>West Bengal</option>
+              </optgroup>
+              <optgroup label="Union Territories">
+                <option>Andaman and Nicobar Islands</option>
+                <option>Chandigarh</option>
+                <option>Dadra and Nagar Haveli and Daman and Diu</option>
+                <option>Delhi</option>
+                <option>Jammu and Kashmir</option>
+                <option>Ladakh</option>
+                <option>Lakshadweep</option>
+                <option>Puducherry</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>PIN Code</label>
+            <input name="pincode" type="text" placeholder="560001" maxlength="6" pattern="[0-9]{6}" required />
+          </div>
+        </div>
+      </div>
+
+      <!-- PAYMENT METHOD -->
+      <div class="checkout-card">
+        <h2><i class="fas fa-credit-card"></i> Payment Method</h2>
+        <div class="payment-options">
+          <label class="pay-option active" onclick="switchPayment('upi', this)">
+            <input type="radio" name="payment" value="upi" checked />
+            <div>
+              <div class="pay-option-label">📱 UPI</div>
+              <div class="pay-option-sub">GPay, PhonePe, Paytm</div>
+            </div>
+          </label>
+          <label class="pay-option" onclick="switchPayment('netbanking', this)">
+            <input type="radio" name="payment" value="netbanking" />
+            <div>
+              <div class="pay-option-label">🏦 Net Banking</div>
+              <div class="pay-option-sub">All Indian banks</div>
+            </div>
+          </label>
+          <label class="pay-option" onclick="switchPayment('card', this)">
+            <input type="radio" name="payment" value="card" />
+            <div>
+              <div class="pay-option-label">💳 Debit / Credit Card</div>
+              <div class="pay-option-sub">Visa, Mastercard, RuPay</div>
+            </div>
+          </label>
+          <label class="pay-option" onclick="switchPayment('cod', this)">
+            <input type="radio" name="payment" value="cod" />
+            <div>
+              <div class="pay-option-label">💵 Cash on Delivery</div>
+              <div class="pay-option-sub">Pay when delivered</div>
+            </div>
+          </label>
+        </div>
+
+        <!-- UPI Panel -->
+        <div class="pay-panel active" id="panel-upi">
+          <div class="form-group">
+            <label>UPI ID</label>
+            <div class="upi-input-wrap">
+              <input name="upiId" type="text" placeholder="yourname@upi" />
+              <button type="button" onclick="verifyUPI()">Verify</button>
+            </div>
+          </div>
+          <p style="font-size:.75rem;color:#64748b;margin-top:8px">
+            <i class="fas fa-info-circle" style="color:#2563eb"></i>
+            Enter your UPI ID and click Verify before placing order.
+          </p>
+        </div>
+
+        <!-- Net Banking Panel -->
+        <div class="pay-panel" id="panel-netbanking">
+          <div class="form-group">
+            <label>Select Your Bank</label>
+            <div class="netbanking-grid">
+              <div class="bank-btn" onclick="selectBank(this)">SBI</div>
+              <div class="bank-btn" onclick="selectBank(this)">HDFC</div>
+              <div class="bank-btn" onclick="selectBank(this)">ICICI</div>
+              <div class="bank-btn" onclick="selectBank(this)">Axis</div>
+              <div class="bank-btn" onclick="selectBank(this)">Kotak</div>
+              <div class="bank-btn" onclick="selectBank(this)">PNB</div>
+              <div class="bank-btn" onclick="selectBank(this)">BOB</div>
+              <div class="bank-btn" onclick="selectBank(this)">Other</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card Panel -->
+        <div class="pay-panel" id="panel-card">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Card Number</label>
+              <input name="cardNumber" type="text" placeholder="1234 5678 9012 3456" maxlength="19" />
+            </div>
+          </div>
+          <div class="form-row cols-2" style="margin-top:14px">
+            <div class="form-group">
+              <label>Expiry (MM / YY)</label>
+              <input name="expiry" type="text" placeholder="08 / 27" maxlength="7" />
+            </div>
+            <div class="form-group">
+              <label>CVV</label>
+              <input name="cvv" type="text" placeholder="•••" maxlength="4" />
+            </div>
+          </div>
+          <div class="form-row" style="margin-top:14px">
+            <div class="form-group">
+              <label>Name on Card</label>
+              <input name="cardName" type="text" placeholder="RAHUL SHARMA" />
+            </div>
+          </div>
+        </div>
+
+        <!-- COD Panel -->
+        <div class="pay-panel" id="panel-cod">
+          <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:14px 16px;display:flex;gap:10px;align-items:flex-start">
+            <i class="fas fa-check-circle" style="color:#16a34a;margin-top:2px"></i>
+            <div>
+              <p style="font-size:.88rem;font-weight:600;color:#15803d;margin-bottom:3px">Cash on Delivery selected</p>
+              <p style="font-size:.78rem;color:#166534">Pay in cash when your order arrives. ₹30 COD fee applies.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+
+    <!-- ORDER SUMMARY -->
+    <div class="order-summary-card">
+      <h2>Order Summary</h2>
+      <div class="summary-items" id="summary-items">
+        <div style="text-align:center;padding:20px;color:#94a3b8;font-size:.85rem">Loading cart...</div>
+      </div>
+      <div class="summary-row"><span>Subtotal</span><span id="co-subtotal">₹0.00</span></div>
+      <div class="summary-row"><span>Shipping</span><span id="co-shipping">₹99.00</span></div>
+      <div class="summary-row"><span>GST (18%)</span><span id="co-tax">₹0.00</span></div>
+      <div class="summary-row total"><span>Total</span><span id="co-total">₹0.00</span></div>
+      <button class="place-order-btn" id="place-order-btn" type="submit" form="checkout-form">
+        <i class="fas fa-lock"></i> Place Order
+      </button>
+      <p class="secure-note"><i class="fas fa-shield-alt"></i> 100% Secure &amp; Encrypted Payment</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="site-footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-grid">
+        <div class="site-footer-brand">
+          <div class="logo"><div class="paw-icon">🐾</div>Happy<span>Paws</span></div>
+          <p>Quality products for happy, healthy pets — trusted by thousands of pet parents across India.</p>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+        <div class="site-footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="../index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+            <li><a href="shop.html"><i class="fas fa-chevron-right"></i> Shop</a></li>
+            <li><a href="cart.html"><i class="fas fa-chevron-right"></i> Cart</a></li>
+          </ul>
+        </div>
+        <div class="site-footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Shipping Info</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Returns</a></li>
+            <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="site-footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><i class="fas fa-envelope"></i> support@happypaws.in</li>
+            <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+            <li><i class="fas fa-map-marker-alt"></i> Mumbai, Maharashtra</li>
+          </ul>
+        </div>
+      </div>
+      <div class="site-footer-bottom">
+        <p>&copy; 2026 HappyPaws. All Rights Reserved.</p>
+        <div class="site-footer-bottom-links"><a href="#">Terms</a><a href="#">Privacy</a></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end .page-shell -->
+
+<script src="../js/cart.js"></script>
+<script src="../js/auth.js"></script>
+<script>
+  // Payment panel switching
+  function switchPayment(type, el) {
+    document.querySelectorAll('.pay-option').forEach(function(o){ o.classList.remove('active'); });
+    document.querySelectorAll('.pay-panel').forEach(function(p){ p.classList.remove('active'); });
+    el.classList.add('active');
+    var panel = document.getElementById('panel-' + type);
+    if (panel) panel.classList.add('active');
+  }
+
+  function verifyUPI() {
+    var upi = document.querySelector('input[name="upiId"]').value.trim();
+    if (!upi || !upi.includes('@')) {
+      alert('Please enter a valid UPI ID (e.g. name@upi)');
+      return;
+    }
+    alert('UPI ID verified: ' + upi);
+  }
+
+  function selectBank(el) {
+    document.querySelectorAll('.bank-btn').forEach(function(b){ b.classList.remove('active'); });
+    el.classList.add('active');
+  }
+
+  // Load cart into summary
+  function loadSummary() {
+    fetch('http://localhost:5000/api/cart')
+      .then(function(r){ return r.json(); })
+      .then(function(cart){ renderSummary(cart); })
+      .catch(function(){ renderSummary({ items: [] }); });
+  }
+
+  function renderSummary(cart) {
+    var items = cart.items || [];
+    var container = document.getElementById('summary-items');
+    if (!items.length) {
+      container.innerHTML = '<p style="text-align:center;color:#94a3b8;font-size:.85rem;padding:16px">Your cart is empty</p>';
+      return;
+    }
+    var html = '';
+    var subtotal = 0;
+    for (var i = 0; i < items.length; i++) {
+      var it = items[i];
+      subtotal += it.price * it.qty;
+      html += '<div class="summary-item">' +
+        '<img src="' + (it.image || 'https://images.unsplash.com/photo-1517849845537-4d257902454a?w=200&q=80') + '" alt="' + it.title + '" />' +
+        '<div class="summary-item-info"><h4>' + it.title + '</h4><p>Qty: ' + it.qty + '</p></div>' +
+        '<div class="summary-item-price">&#8377;' + (it.price * it.qty).toFixed(2) + '</div>' +
+        '</div>';
+    }
+    container.innerHTML = html;
+
+    var shipping = 99;
+    var tax = Math.round(subtotal * 0.18 * 100) / 100;
+    var total = subtotal + shipping + tax;
+
+    document.getElementById('co-subtotal').textContent = '\u20B9' + subtotal.toFixed(2);
+    document.getElementById('co-shipping').textContent = '\u20B9' + shipping.toFixed(2);
+    document.getElementById('co-tax').textContent = '\u20B9' + tax.toFixed(2);
+    document.getElementById('co-total').textContent = '\u20B9' + total.toFixed(2);
+  }
+
+  // Auto-fill from saved profile + address in account page
+  document.addEventListener('DOMContentLoaded', function() {
+    try {
+      var u       = JSON.parse(localStorage.getItem('currentUser')) || {};
+      var _uid    = u.id || u._id || u.email || '';
+      var profile = JSON.parse(localStorage.getItem('hp_profile_' + _uid))  || {};
+      var addr    = JSON.parse(localStorage.getItem('hp_address_' + _uid))   || {};
+
+      function fill(name, val) {
+        var el = document.querySelector('[name="' + name + '"]');
+        if (el && !el.value && val) el.value = val;
+      }
+
+      fill('name',     profile.name     || u.name  || '');
+      fill('email',    profile.email    || u.email || '');
+      fill('phone',    profile.phone    || '');
+      fill('address',  addr.address     || '');
+      fill('address2', addr.address2    || '');
+      fill('city',     addr.city        || '');
+      fill('pincode',  addr.pincode     || '');
+      if (addr.state) {
+        var stateEl = document.querySelector('[name="state"]');
+        if (stateEl && !stateEl.value) stateEl.value = addr.state;
+      }
+    } catch(e) {}
+  });
+
+  // Form submit
+  document.getElementById('checkout-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var btn = document.getElementById('place-order-btn');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+    btn.disabled = true;
+
+    // Collect form fields
+    var data = {};
+    new FormData(this).forEach(function(v, k){ data[k] = v; });
+
+    // Always attach userId + email from logged-in user (overrides form if needed)
+    try {
+      var u = JSON.parse(localStorage.getItem('currentUser'));
+      if (u) {
+        data.userId = u.id || u._id || '';
+        if (!data.email && u.email) data.email = u.email;
+      }
+    } catch(e) {}
+
+    // Attach cart items from backend
+    fetch('http://localhost:5000/api/cart')
+      .then(function(r){ return r.json(); })
+      .then(function(cart){
+        data.items = cart.items || [];
+        return fetch('http://localhost:5000/api/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(order){
+        localStorage.setItem('lastOrder', JSON.stringify(order));
+        window.location.href = 'order-confirmation.html';
+      })
+      .catch(function(){
+        btn.innerHTML = '<i class="fas fa-lock"></i> Place Order';
+        btn.disabled = false;
+        alert('Unable to place order. Please try again.');
+      });
+  });
+
+  window.addEventListener('scroll', function(){
+    document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  loadSummary();
+</script>
+</body>
+</html>

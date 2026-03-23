@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product | HappyPaws</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="announcement">✨ Free shipping on orders over $50 • 30-day returns</div>
+  <header class="site-header">
+    <div class="brand-wrap">
+      <div class="brand-logo-wrap">
+        <img class="brand-image" src="Image.png" alt="HappyPaws logo" onerror="this.style.display='none'" />
+        <div>
+          <div class="brand-name">HappyPaws</div>
+          <p class="brand-tagline">Premium products for modern pets.</p>
+        </div>
+      </div>
+    </div>
+    <nav class="nav-links"><a href="index.html">Home</a><a href="index.html#shop">Shop</a><a href="index.html#collections">Collections</a><a href="index.html#about">About</a><a href="index.html#contact">Contact</a></nav>
+    <div class="header-actions"><button class="icon-btn">🔍</button><button class="icon-btn cart">🛒 <span class="cart-count">1</span></button></div>
+  </header>
+
+  <main class="product-page">
+    <div class="eyebrow">Backed by vet-approved quality</div>
+    <section class="product-top">
+      <div class="product-images">
+        <img id="main-image" class="main-image" src="https://picsum.photos/seed/pet/900/500" alt="Product image" onerror="this.src='https://picsum.photos/900/500?grayscale'" />
+        <div class="thumb-row" id="thumb-row"></div>
+      </div>
+      <div class="product-meta">
+        <p class="eyebrow" id="product-tag">Best Seller</p>
+        <h1 id="product-title">Loading product...</h1>
+        <p class="price-large"><span id="product-price">$0.00</span> <span class="compare" id="product-compare"></span></p>
+        <p class="stars" id="product-stars">★★★★★ 0 reviews</p>
+        <p class="product-description" id="product-description">Fetching product details...</p>
+        <div class="variant-row"><label>Size</label><select id="size-select"><option>Medium</option><option>Large</option></select></div>
+        <div class="variant-row"><label>Color</label><select id="color-select"><option>Orange</option><option>Green</option><option>Blue</option></select></div>
+        <div class="qty-row"><label>Quantity</label><input id="qty-input" type="number" min="1" value="1" /></div>
+        <div class="action-row"><button id="add-cart-button" class="btn btn-primary">Add to Cart</button><button class="btn btn-secondary">Buy Now</button></div>
+      </div>
+    </section>
+
+    <section class="product-details">
+      <div><h2>Product Description</h2><p id="details-desc">Loading description...</p></div>
+      <div><h2>Customer Reviews</h2><p id="details-reviews">Fetching reviews...</p></div>
+      <div><h2>Related Products</h2><div class="related-grid" id="related-grid"></div></div>
+    </section>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get('id');
+
+    async function fetchProduct(id) {
+      try {
+        const res = await fetch(`http://localhost:5000/api/product/${id}`);
+        if (!res.ok) throw new Error('Product not found');
+        const product = await res.json();
+
+        document.getElementById('product-title').textContent = product.title;
+        document.getElementById('product-price').textContent = `$${product.price.toFixed(2)}`;
+        document.getElementById('product-compare').textContent = product.compareAtPrice ? `$${product.compareAtPrice.toFixed(2)}` : '';
+        document.getElementById('product-description').textContent = product.description;
+        document.getElementById('details-desc').textContent = product.description;
+        document.getElementById('details-reviews').textContent = `⭐⭐⭐⭐⭐ ${product.reviews} reviews`;
+        document.getElementById('main-image').src = product.image;
+
+        const stars = '★'.repeat(Math.round(product.rating || 4)) + '☆'.repeat(5 - Math.round(product.rating || 4));
+        document.getElementById('product-stars').textContent = `${stars} ${product.reviews} reviews`;
+
+        const thumbRow = document.getElementById('thumb-row');
+        thumbRow.innerHTML = '';
+        for (let i = 0; i < 3; i++) {
+          const thumb = document.createElement('img');
+          thumb.src = product.image;
+          thumb.alt = `${product.title} image ${i + 1}`;
+          thumb.onerror = function() { this.src='https://picsum.photos/400/250'; };
+          thumb.addEventListener('click', () => document.getElementById('main-image').src = thumb.src);
+          thumbRow.appendChild(thumb);
+        }
+
+        document.getElementById('add-cart-button').addEventListener('click', async () => {
+          const qty = Number(document.getElementById('qty-input').value) || 1;
+          await fetch('http://localhost:5000/api/cart/add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ productId: product._id, qty })
+          });
+          alert('Added to cart');
+        });
+
+        const relatedGrid = document.getElementById('related-grid');
+        relatedGrid.innerHTML = `<div class="related-card"><img src="${product.image}" alt="Related" /><p>Try our ${product.title} bundle.</p></div><div class="related-card"><img src="${product.image}" alt="Related" /><p>Pair with our grooming kit.</p></div>`;
+      } catch (err) {
+        document.getElementById('product-title').textContent = 'Product Not Found';
+        document.getElementById('product-description').textContent = 'Please return to home and select another product.';
+      }
+    }
+
+    if (productId) fetchProduct(productId);
+    else { document.getElementById('product-title').textContent = 'No product selected'; document.getElementById('product-description').textContent = 'Go back and choose a product.'; }
+  </script>
+</body>
+</html>
