@@ -523,12 +523,11 @@ app.use('/frontend', express.static(path.join(__dirname, '..', 'Frontend')));
 app.get('/api/health', (req, res) => res.json({ status: 'ok', db: DB_NAME }));
 
 /* ─── Start ─────────────────────────────────────────────────────────────── */
-app.listen(PORT, async () => {
-  try {
-    await connectMongo();
-    console.log('HappyPaws backend running on http://localhost:' + PORT);
-  } catch (err) {
-    console.error('MongoDB connection failed:', err.message);
-    console.log('Server running without DB — check MONGO_URI in .env');
-  }
+// Listen first, then connect to MongoDB
+const server = app.listen(PORT, () => {
+  console.log('HappyPaws backend running on port ' + PORT);
 });
+
+connectMongo()
+  .then(() => console.log('MongoDB ready'))
+  .catch(err => console.error('MongoDB connection failed:', err.message));
