@@ -1,4 +1,4 @@
-// Search and Filter Functionality
+﻿// Search and Filter Functionality
 
 document.addEventListener('DOMContentLoaded', async () => {
   const searchInput = document.getElementById('search-input');

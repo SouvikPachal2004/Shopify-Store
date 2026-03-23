@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="announcement">? Free shipping on orders over $50 � 30-day returns</div>
+  <div class="announcement">? Free shipping on orders over $50 � 30-day returns</div>
   <header class="site-header">
     <div class="brand-wrap">
       <div class="brand-logo-wrap">
@@ -22,7 +22,7 @@
       </div>
     </div>
     <nav class="nav-links"><a href="index.html">Home</a><a href="index.html#shop">Shop</a><a href="index.html#collections">Collections</a><a href="index.html#about">About</a><a href="index.html#contact">Contact</a></nav>
-    <div class="header-actions"><button class="icon-btn">??</button><button class="icon-btn cart">?? <span class="cart-count">1</span></button></div>
+    <div class="header-actions"><button class="icon-btn">🐾</button><button class="icon-btn cart">🐾 <span class="cart-count">1</span></button></div>
   </header>
 
   <main class="product-page">
@@ -36,7 +36,7 @@
         <p class="eyebrow" id="product-tag">Best Seller</p>
         <h1 id="product-title">Loading product...</h1>
         <p class="price-large"><span id="product-price">$0.00</span> <span class="compare" id="product-compare"></span></p>
-        <p class="stars" id="product-stars">????? 0 reviews</p>
+        <p class="stars" id="product-stars">⭐⭐⭐⭐⭐ 0 reviews</p>
         <p class="product-description" id="product-description">Fetching product details...</p>
         <div class="variant-row"><label>Size</label><select id="size-select"><option>Medium</option><option>Large</option></select></div>
         <div class="variant-row"><label>Color</label><select id="color-select"><option>Orange</option><option>Green</option><option>Blue</option></select></div>
@@ -67,10 +67,10 @@
         document.getElementById('product-compare').textContent = product.compareAtPrice ? `$${product.compareAtPrice.toFixed(2)}` : '';
         document.getElementById('product-description').textContent = product.description;
         document.getElementById('details-desc').textContent = product.description;
-        document.getElementById('details-reviews').textContent = `????? ${product.reviews} reviews`;
+        document.getElementById('details-reviews').textContent = `⭐⭐⭐⭐⭐ ${product.reviews} reviews`;
         document.getElementById('main-image').src = product.image;
 
-        const stars = '?'.repeat(Math.round(product.rating || 4)) + '?'.repeat(5 - Math.round(product.rating || 4));
+        const stars = '⭐'.repeat(Math.round(product.rating || 4)) + '☆'.repeat(5 - Math.round(product.rating || 4));
         document.getElementById('product-stars').textContent = `${stars} ${product.reviews} reviews`;
 
         const thumbRow = document.getElementById('thumb-row');

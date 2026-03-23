@@ -1,4 +1,4 @@
-// Account Dashboard Management
+﻿// Account Dashboard Management
 document.addEventListener('DOMContentLoaded', () => {
   const currentUser = localStorage.getItem('currentUser');
   

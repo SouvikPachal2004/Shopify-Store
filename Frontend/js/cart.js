@@ -1,4 +1,4 @@
-// ===== CART MANAGER =====
+ï»¿// ===== CART MANAGER =====
 var API_URL = 'https://shopify-store-o6wo.onrender.com/api';
 
 var cartManager = {
@@ -24,7 +24,7 @@ var cartManager = {
       .catch(function () { self.cart = { items: [] }; });
   },
 
-  // Add to cart — works immediately, no need to wait for loadCart
+  // Add to cart ï¿½ works immediately, no need to wait for loadCart
   addToCart: function (productId, qty) {
     var self = this;
     qty = qty || 1;
@@ -176,7 +176,7 @@ var cartManager = {
     container.innerHTML = html;
   },
 
-  // Event delegation on #cart-items — handles qty and remove
+  // Event delegation on #cart-items ï¿½ handles qty and remove
   bindEvents: function () {
     var self = this;
     var container = document.getElementById('cart-items');

@@ -1,4 +1,4 @@
-// simple navbar shadow on scroll
+﻿// simple navbar shadow on scroll
 window.addEventListener("scroll", function () {
   const header = document.querySelector(".header");
   if (window.scrollY > 50) {

@@ -1,4 +1,4 @@
-// ===== APP.JS — Home page dynamic product/category loading =====
+ï»¿// ===== APP.JS ï¿½ Home page dynamic product/category loading =====
 var API_BASE = 'https://shopify-store-o6wo.onrender.com/api';
 
 function renderHomeProducts(products) {

@@ -1,4 +1,4 @@
-// ===== AUTH MANAGER =====
+﻿// ===== AUTH MANAGER =====
 var AUTH_API = 'https://shopify-store-o6wo.onrender.com/api';
 
 var authManager = (function () {

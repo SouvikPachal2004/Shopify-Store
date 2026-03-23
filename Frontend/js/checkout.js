@@ -1,4 +1,4 @@
-// Checkout Form Handler
+﻿// Checkout Form Handler
 
 document.addEventListener('DOMContentLoaded', () => {
   const checkoutForm = document.getElementById('checkout-form');
