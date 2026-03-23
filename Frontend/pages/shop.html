@@ -56,8 +56,9 @@
       }
       .filter-option:hover { background: rgba(37,99,235,0.06); color: var(--primary); }
       .filter-option input { width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer; }
-      .price-inputs { display: flex; gap: 8px; align-items: center; }
+      .price-inputs { display: flex; gap: 8px; align-items: center; width: 100%; }
       .price-inputs input {
+        min-width: 0; width: 0;
         flex: 1; padding: 9px 10px; border: 1.5px solid var(--border);
         border-radius: 8px; font-size: 0.85rem; font-family: 'Poppins', sans-serif;
         outline: none; transition: border-color 0.2s;
@@ -267,9 +268,9 @@
           <div class="filter-group">
             <div class="filter-group-title"><i class="fas fa-tag"></i> Price Range</div>
             <div class="price-inputs">
-              <input type="number" id="min-price" placeholder="?0" min="0" />
-              <span>�</span>
-              <input type="number" id="max-price" placeholder="?10000" min="0" />
+              <input type="number" id="min-price" placeholder="0" min="0" />
+              <span>–</span>
+              <input type="number" id="max-price" placeholder="10000" min="0" />
             </div>
             <button class="btn btn-primary btn-sm" style="width:100%;margin-top:10px;justify-content:center;" onclick="applyFilters()">
               Apply
@@ -409,7 +410,7 @@
         const img = Array.isArray(p.images) ? p.images[0] : (p.image || '');
         const old = p.compareAtPrice || p.price;
         const disc = old > p.price ? Math.round((1 - p.price/old)*100) : 0;
-        const stars = '?'.repeat(Math.floor(p.rating||5)) + '?'.repeat(5-Math.floor(p.rating||5));
+        const stars = '⭐'.repeat(Math.floor(p.rating||5)) + '☆'.repeat(5-Math.floor(p.rating||5));
         const id = p._id || p.id || '';
         return (
           '<div class="product-card" onclick="window.location.href=\'product.html?id=' + id + '\'" style="cursor:pointer">' +
