@@ -141,7 +141,7 @@
         } catch(err) {
           status.className = 'auth-status error';
           if (err.message === 'Failed to fetch' || err.name === 'TypeError') {
-            status.textContent = 'Cannot connect to server. Please make sure the backend is running on port 5000.';
+            status.textContent = 'Server is waking up, please wait 30 seconds and try again.';
           } else {
             status.textContent = err.message;
           }
