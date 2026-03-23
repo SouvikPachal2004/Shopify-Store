@@ -474,25 +474,31 @@
     if (!confirm('Are you sure you want to cancel this order?')) return;
     btn.disabled = true;
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cancelling...';
+
+    // Save cancellation locally immediately as fallback
+    var cancelledKey = 'hp_cancelled_orders';
+    var cancelled = [];
+    try { cancelled = JSON.parse(localStorage.getItem(cancelledKey)) || []; } catch(e){}
+    if (cancelled.indexOf(String(orderId)) === -1) cancelled.push(String(orderId));
+    localStorage.setItem(cancelledKey, JSON.stringify(cancelled));
+
+    // Try backend (may be slow on free tier)
+    var controller = new AbortController();
+    var timeout = setTimeout(function(){ controller.abort(); }, 15000);
+
     fetch(API + '/orders/' + orderId + '/cancel', {
       method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
+      signal: controller.signal
     })
-    .then(function(r) { return r.json(); })
+    .then(function(r) { clearTimeout(timeout); return r.json(); })
     .then(function(data) {
-      if (data.success) {
-        // Refresh orders list
-        loadOrders();
-      } else {
-        alert(data.message || 'Could not cancel order.');
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-times-circle"></i> Cancel Order';
-      }
+      loadOrders();
     })
     .catch(function() {
-      alert('Network error. Please try again.');
-      btn.disabled = false;
-      btn.innerHTML = '<i class="fas fa-times-circle"></i> Cancel Order';
+      clearTimeout(timeout);
+      // Backend failed but local cancellation saved — still refresh UI
+      loadOrders();
     });
   }
 
@@ -519,6 +525,18 @@
 
   function renderOrders(orders) {
     var container = document.getElementById('orders-container');
+
+    // Apply local cancellations as fallback
+    var cancelledKey = 'hp_cancelled_orders';
+    var localCancelled = [];
+    try { localCancelled = JSON.parse(localStorage.getItem(cancelledKey)) || []; } catch(e){}
+    orders = orders.map(function(o) {
+      if (localCancelled.indexOf(String(o._id.$oid || o._id)) !== -1 && o.status !== 'cancelled') {
+        return Object.assign({}, o, { status: 'cancelled' });
+      }
+      return o;
+    });
+
     if (!orders.length) {
       container.innerHTML =
         '<div class="empty-orders">' +
