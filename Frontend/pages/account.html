@@ -104,6 +104,7 @@
       text-transform: uppercase; letter-spacing: .05em;
     }
     .badge-confirmed  { background:#dcfce7; color:#15803d; }
+    .badge-cancelled  { background:#fee2e2; color:#dc2626; }
     .badge-processing { background:#fef3c7; color:#92400e; }
     .badge-shipped    { background:#dbeafe; color:#1d4ed8; }
     .badge-delivered  { background:#f0fdf4; color:#166534; border:1px solid #bbf7d0; }
@@ -122,6 +123,13 @@
       font-size:.78rem; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:5px;
     }
     .btn-track:hover { opacity:.9; }
+    .btn-cancel {
+      padding:7px 14px; background:#fff; color:#dc2626;
+      border:1.5px solid #dc2626; border-radius:8px; font-family:Poppins,sans-serif;
+      font-size:.78rem; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:5px;
+      transition: background .2s, color .2s;
+    }
+    .btn-cancel:hover { background:#dc2626; color:#fff; }
     .empty-orders { text-align:center; padding:48px 20px; color:#94a3b8; }
     .empty-orders i { font-size:2.5rem; opacity:.3; display:block; margin-bottom:14px; }
 
@@ -462,6 +470,32 @@
     return new Date(d).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
   }
 
+  function cancelOrder(orderId, btn) {
+    if (!confirm('Are you sure you want to cancel this order?')) return;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cancelling...';
+    fetch(API + '/orders/' + orderId + '/cancel', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' }
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.success) {
+        // Refresh orders list
+        loadOrders();
+      } else {
+        alert(data.message || 'Could not cancel order.');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-times-circle"></i> Cancel Order';
+      }
+    })
+    .catch(function() {
+      alert('Network error. Please try again.');
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-times-circle"></i> Cancel Order';
+    });
+  }
+
   function calcTotal(items) {
     var sub = 0;
     (items||[]).forEach(function(i){ sub += Number(i.price) * Number(i.qty); });
@@ -520,16 +554,22 @@
           '<div class="order-head">' +
             '<div>' +
               '<div class="order-no">' + (o.orderNumber || 'HP-' + o._id) + '</div>' +
-              '<div class="order-date">' + fmtDate(o.createdAt) + ' &nbsp;�&nbsp; ' + items.length + ' item' + (items.length !== 1 ? 's' : '') + '</div>' +
+              '<div class="order-date">' + fmtDate(o.createdAt) + ' &nbsp;&bull;&nbsp; ' + items.length + ' item' + (items.length !== 1 ? 's' : '') + '</div>' +
             '</div>' +
             '<span class="order-badge ' + badgeCls + '">' + displayStatus + '</span>' +
           '</div>' +
           (thumbs ? '<div class="order-thumbs">' + thumbs + '</div>' : '') +
           '<div class="order-foot">' +
             '<div class="order-total">Total: <strong>\u20B9' + total.toFixed(2) + '</strong></div>' +
-            '<button class="btn-track" onclick="openTrack(' + JSON.stringify(o).replace(/"/g,'&quot;') + ')">' +
-              '<i class="fas fa-map-marker-alt"></i> Track Order' +
-            '</button>' +
+            '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
+              ((['confirmed','processing'].indexOf(displayStatus) !== -1) ?
+                '<button class="btn-cancel" onclick="cancelOrder(' + JSON.stringify(o._id) + ',this)">' +
+                  '<i class="fas fa-times-circle"></i> Cancel Order' +
+                '</button>' : '') +
+              '<button class="btn-track" onclick="openTrack(' + JSON.stringify(o).replace(/"/g,'&quot;') + ')">' +
+                '<i class="fas fa-map-marker-alt"></i> Track Order' +
+              '</button>' +
+            '</div>' +
           '</div>' +
         '</div>';
     }

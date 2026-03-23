@@ -472,6 +472,23 @@ app.post('/api/orders', async (req, res) => {
   }
 });
 
+/* ─── Cancel order ──────────────────────────────────────────────────────── */
+app.patch('/api/orders/:id/cancel', async (req, res) => {
+  try {
+    const order = await db.collection('orders').findOne({ _id: new ObjectId(req.params.id) });
+    if (!order) return res.status(404).json({ message: 'Order not found' });
+    if (['shipped', 'delivered', 'cancelled'].includes(order.status))
+      return res.status(400).json({ message: 'Order cannot be cancelled at this stage' });
+    await db.collection('orders').updateOne(
+      { _id: new ObjectId(req.params.id) },
+      { $set: { status: 'cancelled' } }
+    );
+    res.json({ success: true, message: 'Order cancelled successfully' });
+  } catch (e) {
+    res.status(500).json({ message: 'Unable to cancel order' });
+  }
+});
+
 app.get('/api/orders/latest', async (req, res) => {
   try {
     const order = await db.collection('orders').findOne({}, { sort: { createdAt: -1 } });
