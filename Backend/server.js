@@ -4,7 +4,7 @@ const { MongoClient, ObjectId } = require('mongodb');
 const bcrypt   = require('bcrypt');
 const jwt      = require('jsonwebtoken');
 const path     = require('path');
-require('dotenv').config();
+require('dotenv').config({ path: require('path').join(__dirname, '.env') });
 
 const app = express();
 app.use(cors());
