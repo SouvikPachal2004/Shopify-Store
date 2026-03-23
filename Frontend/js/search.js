@@ -1,4 +1,4 @@
-﻿// Search and Filter Functionality
+// Search and Filter Functionality
 
 document.addEventListener('DOMContentLoaded', async () => {
   const searchInput = document.getElementById('search-input');
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         <img src="${p.image}" alt="${p.title}" style="width: 100%; height: 280px; object-fit: cover;">
         <div style="padding: 20px;">
           <h3 style="margin-bottom: 8px; font-size: 18px;">${p.title}</h3>
-          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;"><span style="color: #fbbf24;">${'⭐'.repeat(Math.round(p.rating || 4))}</span><span style="color: #64748b; font-size: 14px;">(${p.reviews || Math.floor(Math.random() * 200 + 20)})</span></div>
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;"><span style="color: #fbbf24;">${'?'.repeat(Math.round(p.rating || 4))}</span><span style="color: #64748b; font-size: 14px;">(${p.reviews || Math.floor(Math.random() * 200 + 20)})</span></div>
           <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px;"><span style="font-size: 24px; font-weight: 700; color: #2563eb;">$${Number(p.price||0).toFixed(2)}</span></div>
           <button class="btn btn-primary" style="width: 100%; padding: 12px;" onclick="app.addToCart('${p._id || p.id}')">Add to Cart</button>
         </div>
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   async function loadProducts() {
     try {
-      const res = await fetch('https://shopify-store-o6mo.onrender.com/api/products');
+      const res = await fetch('https://shopify-store-o6wo.onrender.com/api/products');
       if (!res.ok) throw new Error('api');
       return await res.json();
     } catch (error) {

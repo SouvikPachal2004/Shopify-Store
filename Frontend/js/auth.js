@@ -1,9 +1,9 @@
-﻿// ===== AUTH MANAGER =====
-var AUTH_API = 'https://shopify-store-o6mo.onrender.com/api';
+// ===== AUTH MANAGER =====
+var AUTH_API = 'https://shopify-store-o6wo.onrender.com/api';
 
 var authManager = (function () {
 
-  // ── helpers ──────────────────────────────────────────────────────────────
+  // -- helpers --------------------------------------------------------------
   function getUser() {
     try { return JSON.parse(localStorage.getItem('currentUser')); }
     catch (e) { return null; }
@@ -24,7 +24,7 @@ var authManager = (function () {
     // don't lose their saved details if they log back in on the same device.
   }
 
-  // ── avatar initials ───────────────────────────────────────────────────────
+  // -- avatar initials -------------------------------------------------------
   function initials(name) {
     if (!name) return '?';
     var parts = name.trim().split(' ');
@@ -33,7 +33,7 @@ var authManager = (function () {
       : parts[0][0].toUpperCase();
   }
 
-  // ── build profile dropdown ────────────────────────────────────────────────
+  // -- build profile dropdown ------------------------------------------------
   function buildProfileDropdown(user, isInnerPage) {
     var prefix = isInnerPage ? '../' : '';
     var accountHref = prefix + 'pages/account.html';
@@ -68,7 +68,7 @@ var authManager = (function () {
     return wrap;
   }
 
-  // ── inject CSS once ───────────────────────────────────────────────────────
+  // -- inject CSS once -------------------------------------------------------
   function injectStyles() {
     if (document.getElementById('auth-styles')) return;
     var s = document.createElement('style');
@@ -98,7 +98,7 @@ var authManager = (function () {
     document.head.appendChild(s);
   }
 
-  // ── update header UI ──────────────────────────────────────────────────────
+  // -- update header UI ------------------------------------------------------
   function updateHeaderUI() {
     var user = getUser();
     var headerIcons = document.querySelector('.header-icons');
@@ -144,7 +144,7 @@ var authManager = (function () {
     }
   }
 
-  // ── logout ────────────────────────────────────────────────────────────────
+  // -- logout ----------------------------------------------------------------
   function logout() {
     clearSession();
     // Show brief toast then redirect
@@ -159,7 +159,7 @@ var authManager = (function () {
     }, 1200);
   }
 
-  // ── public API ────────────────────────────────────────────────────────────
+  // -- public API ------------------------------------------------------------
   return {
     init: function () { updateHeaderUI(); },
     logout: logout,

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -201,7 +201,7 @@
       <!-- HEADER -->
       <header class="header" id="main-header">
         <a href="../index.html" class="logo">
-          <div class="paw-icon">🐾</div>
+          <div class="paw-icon">??</div>
           Happy<span>Paws</span>
         </a>
         <nav>
@@ -230,7 +230,7 @@
       <!-- PAGE HERO -->
       <div class="page-hero">
         <div class="page-hero-inner">
-          <span class="page-hero-tag">🛍️ All Products</span>
+          <span class="page-hero-tag">??? All Products</span>
           <h1>Shop All Products</h1>
           <p>Discover our complete collection of premium pet products</p>
           <div class="hero-search">
@@ -267,9 +267,9 @@
           <div class="filter-group">
             <div class="filter-group-title"><i class="fas fa-tag"></i> Price Range</div>
             <div class="price-inputs">
-              <input type="number" id="min-price" placeholder="₹0" min="0" />
-              <span>—</span>
-              <input type="number" id="max-price" placeholder="₹10000" min="0" />
+              <input type="number" id="min-price" placeholder="?0" min="0" />
+              <span>�</span>
+              <input type="number" id="max-price" placeholder="?10000" min="0" />
             </div>
             <button class="btn btn-primary btn-sm" style="width:100%;margin-top:10px;justify-content:center;" onclick="applyFilters()">
               Apply
@@ -283,11 +283,11 @@
             </label>
             <label class="filter-option">
               <input type="radio" name="rating" value="4" />
-              <span style="color:#f59e0b">★★★★</span>&nbsp;& Up
+              <span style="color:#f59e0b">????</span>&nbsp;& Up
             </label>
             <label class="filter-option">
               <input type="radio" name="rating" value="3" />
-              <span style="color:#f59e0b">★★★</span>&nbsp;& Up
+              <span style="color:#f59e0b">???</span>&nbsp;& Up
             </label>
           </div>
 
@@ -319,8 +319,8 @@
               </div>
               <select class="sort-select" id="sort-select" onchange="sortProducts(this.value)">
                 <option value="featured">Sort: Featured</option>
-                <option value="price-low">Price: Low → High</option>
-                <option value="price-high">Price: High → Low</option>
+                <option value="price-low">Price: Low ? High</option>
+                <option value="price-high">Price: High ? Low</option>
                 <option value="rating">Best Rating</option>
                 <option value="newest">Newest</option>
               </select>
@@ -342,8 +342,8 @@
         <div class="site-footer-inner">
           <div class="site-footer-grid">
             <div class="site-footer-brand">
-              <div class="logo"><div class="paw-icon">🐾</div>Happy<span>Paws</span></div>
-              <p>Quality products for happy, healthy pets — trusted by thousands of pet parents.</p>
+              <div class="logo"><div class="paw-icon">??</div>Happy<span>Paws</span></div>
+              <p>Quality products for happy, healthy pets � trusted by thousands of pet parents.</p>
               <div class="social-links">
                 <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
                 <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
@@ -379,7 +379,7 @@
             </div>
           </div>
           <div class="site-footer-bottom">
-            <p>&copy; 2026 HappyPaws. All Rights Reserved. Made with ❤️ for pets.</p>
+            <p>&copy; 2026 HappyPaws. All Rights Reserved. Made with ?? for pets.</p>
             <div class="site-footer-bottom-links">
               <a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a>
             </div>
@@ -409,7 +409,7 @@
         const img = Array.isArray(p.images) ? p.images[0] : (p.image || '');
         const old = p.compareAtPrice || p.price;
         const disc = old > p.price ? Math.round((1 - p.price/old)*100) : 0;
-        const stars = '★'.repeat(Math.floor(p.rating||5)) + '☆'.repeat(5-Math.floor(p.rating||5));
+        const stars = '?'.repeat(Math.floor(p.rating||5)) + '?'.repeat(5-Math.floor(p.rating||5));
         const id = p._id || p.id || '';
         return (
           '<div class="product-card" onclick="window.location.href=\'product.html?id=' + id + '\'" style="cursor:pointer">' +
@@ -498,7 +498,7 @@
         document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 50);
       });
 
-      fetch('https://shopify-store-o6mo.onrender.com/api/products')
+      fetch('https://shopify-store-o6wo.onrender.com/api/products')
         .then(r => r.json())
         .then(data => {
           allProducts = (data && data.length) ? data : staticProducts;

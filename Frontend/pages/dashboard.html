@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -195,7 +195,7 @@
 
   <!-- HEADER -->
   <header class="header" id="main-header">
-    <a href="../index.html" class="logo"><div class="paw-icon">🐾</div>Happy<span>Paws</span></a>
+    <a href="../index.html" class="logo"><div class="paw-icon">??</div>Happy<span>Paws</span></a>
     <nav>
       <a href="../index.html">Home</a>
       <a href="shop.html">Shop</a>
@@ -219,8 +219,8 @@
       <div class="profile-avatar-xl" id="dash-avatar">?</div>
       <div class="profile-banner-info">
         <h2 id="dash-name">Loading...</h2>
-        <p id="dash-email">—</p>
-        <p style="margin-top:6px;font-size:.78rem;color:rgba(255,255,255,.5)">Member since 2026 &nbsp;·&nbsp; HappyPaws India</p>
+        <p id="dash-email">�</p>
+        <p style="margin-top:6px;font-size:.78rem;color:rgba(255,255,255,.5)">Member since 2026 &nbsp;�&nbsp; HappyPaws India</p>
       </div>
       <div class="profile-banner-actions">
         <button class="btn btn-outline-white" onclick="window.location.href='shop.html'">
@@ -272,8 +272,8 @@
     <div class="track-modal">
       <div class="track-modal-head">
         <div>
-          <h3 id="modal-order-no">Order #—</h3>
-          <p id="modal-order-date">—</p>
+          <h3 id="modal-order-no">Order #�</h3>
+          <p id="modal-order-date">�</p>
         </div>
         <button class="modal-close" onclick="closeTrack()"><i class="fas fa-times"></i></button>
       </div>
@@ -296,7 +296,7 @@
 <script src="../js/cart.js"></script>
 <script src="../js/auth.js"></script>
 <script>
-  var API = 'https://shopify-store-o6mo.onrender.com/api';
+  var API = 'https://shopify-store-o6wo.onrender.com/api';
 
   // Redirect if not logged in
   var currentUser = null;
@@ -323,7 +323,7 @@
     document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 50);
   });
 
-  // ── Order status → progress step index ──────────────────────────────────
+  // -- Order status ? progress step index ----------------------------------
   var STEPS = [
     { key: 'placed',     label: 'Order Placed',   icon: 'fas fa-check' },
     { key: 'confirmed',  label: 'Confirmed',       icon: 'fas fa-thumbs-up' },
@@ -349,7 +349,7 @@
     return sub + 99 + Math.round(sub * 0.18 * 100)/100;
   }
 
-  // ── Render orders ────────────────────────────────────────────────────────
+  // -- Render orders --------------------------------------------------------
   function renderOrders(orders) {
     var list = document.getElementById('orders-list');
 
@@ -410,7 +410,7 @@
           '<div class="order-card-head">' +
             '<div>' +
               '<div class="order-no">' + (o.orderNumber || 'HP-' + o._id) + '</div>' +
-              '<div class="order-date">' + formatDate(o.createdAt) + ' &nbsp;·&nbsp; ' + (items.length) + ' item' + (items.length !== 1 ? 's' : '') + '</div>' +
+              '<div class="order-date">' + formatDate(o.createdAt) + ' &nbsp;�&nbsp; ' + (items.length) + ' item' + (items.length !== 1 ? 's' : '') + '</div>' +
             '</div>' +
             '<span class="order-status ' + statusClass + '">' + displayStatus + '</span>' +
           '</div>' +
@@ -432,7 +432,7 @@
     list.innerHTML = html;
   }
 
-  // ── Track modal ──────────────────────────────────────────────────────────
+  // -- Track modal ----------------------------------------------------------
   function openTrack(order) {
     var stepIdx = statusIndex(order.status);
     document.getElementById('modal-order-no').textContent   = order.orderNumber || 'Order';
@@ -470,7 +470,7 @@
     if (e.target === this) closeTrack();
   });
 
-  // ── Fetch orders ─────────────────────────────────────────────────────────
+  // -- Fetch orders ---------------------------------------------------------
   var params = new URLSearchParams();
   if (currentUser.email) params.append('email', currentUser.email);
   if (currentUser.id)    params.append('userId', currentUser.id);

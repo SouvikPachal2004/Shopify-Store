@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -80,7 +80,7 @@
           </h1>
           <p class="hero-description">
             Give your furry friends the best care they deserve with our
-            curated selection of premium pet products � trusted by 10,000+
+            curated selection of premium pet products ? trusted by 10,000+
             pet parents.
           </p>
           <div class="hero-buttons">
@@ -341,7 +341,7 @@
             </div>
             <p>
               Your pet's happiness is our priority. Quality products for
-              happy, healthy pets � trusted by thousands of pet parents.
+              happy, healthy pets ? trusted by thousands of pet parents.
             </p>
             <div class="social-links">
               <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
@@ -494,7 +494,7 @@
       }
 
       // Try API first, fall back to static data
-      fetch('https://shopify-store-o6mo.onrender.com/api/products')
+      fetch('https://shopify-store-o6wo.onrender.com/api/products')
         .then(r => r.json())
         .then(data => {
           if (data && data.length) {
@@ -507,7 +507,7 @@
         })
         .catch(() => renderProducts(staticProducts));
 
-      fetch('https://shopify-store-o6mo.onrender.com/api/collections')
+      fetch('https://shopify-store-o6wo.onrender.com/api/collections')
         .then(r => r.json())
         .then(data => {
           if (data && data.length) {
