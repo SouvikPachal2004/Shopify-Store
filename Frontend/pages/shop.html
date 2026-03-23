@@ -498,7 +498,7 @@
         document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 50);
       });
 
-      fetch('http://localhost:5000/api/products')
+      fetch('https://shopify-store-o6mo.onrender.com/api/products')
         .then(r => r.json())
         .then(data => {
           allProducts = (data && data.length) ? data : staticProducts;

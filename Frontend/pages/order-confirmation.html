@@ -243,7 +243,7 @@
     }
   } else {
     // Try fetching latest order from backend
-    fetch('http://localhost:5000/api/orders/latest')
+    fetch('https://shopify-store-o6mo.onrender.com/api/orders/latest')
       .then(function(r){ return r.json(); })
       .then(function(order){ if(order && order.orderNumber) renderOrder(order); })
       .catch(function(){});

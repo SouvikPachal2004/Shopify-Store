@@ -58,7 +58,7 @@
 
     async function fetchProduct(id) {
       try {
-        const res = await fetch(`http://localhost:5000/api/product/${id}`);
+        const res = await fetch(`https://shopify-store-o6mo.onrender.com/api/product/${id}`);
         if (!res.ok) throw new Error('Product not found');
         const product = await res.json();
 
@@ -86,7 +86,7 @@
 
         document.getElementById('add-cart-button').addEventListener('click', async () => {
           const qty = Number(document.getElementById('qty-input').value) || 1;
-          await fetch('http://localhost:5000/api/cart/add', {
+          await fetch('https://shopify-store-o6mo.onrender.com/api/cart/add', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ productId: product._id, qty })

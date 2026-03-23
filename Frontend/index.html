@@ -494,7 +494,7 @@
       }
 
       // Try API first, fall back to static data
-      fetch('http://localhost:5000/api/products')
+      fetch('https://shopify-store-o6mo.onrender.com/api/products')
         .then(r => r.json())
         .then(data => {
           if (data && data.length) {
@@ -507,7 +507,7 @@
         })
         .catch(() => renderProducts(staticProducts));
 
-      fetch('http://localhost:5000/api/collections')
+      fetch('https://shopify-store-o6mo.onrender.com/api/collections')
         .then(r => r.json())
         .then(data => {
           if (data && data.length) {

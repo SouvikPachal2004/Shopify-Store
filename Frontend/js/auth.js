@@ -1,5 +1,5 @@
-// ===== AUTH MANAGER =====
-var AUTH_API = 'http://localhost:5000/api';
+﻿// ===== AUTH MANAGER =====
+var AUTH_API = 'https://shopify-store-o6mo.onrender.com/api';
 
 var authManager = (function () {
 

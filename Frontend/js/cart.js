@@ -1,5 +1,5 @@
 ﻿// ===== CART MANAGER =====
-var API_URL = 'http://localhost:5000/api';
+var API_URL = 'https://shopify-store-o6mo.onrender.com/api';
 
 var cartManager = {
   cart: { items: [] },

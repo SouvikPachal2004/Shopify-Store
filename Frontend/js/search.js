@@ -1,4 +1,4 @@
-// Search and Filter Functionality
+﻿// Search and Filter Functionality
 
 document.addEventListener('DOMContentLoaded', async () => {
   const searchInput = document.getElementById('search-input');
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   async function loadProducts() {
     try {
-      const res = await fetch('http://localhost:5000/api/products');
+      const res = await fetch('https://shopify-store-o6mo.onrender.com/api/products');
       if (!res.ok) throw new Error('api');
       return await res.json();
     } catch (error) {

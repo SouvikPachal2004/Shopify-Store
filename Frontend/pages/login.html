@@ -123,7 +123,7 @@
         btn.disabled = true;
 
         try {
-          var res = await fetch('http://localhost:5000/api/auth/login', {
+          var res = await fetch('https://shopify-store-o6mo.onrender.com/api/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: email, password: password })

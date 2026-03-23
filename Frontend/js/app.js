@@ -1,5 +1,5 @@
-// ===== APP.JS — Home page dynamic product/category loading =====
-var API_BASE = 'http://localhost:5000/api';
+﻿// ===== APP.JS — Home page dynamic product/category loading =====
+var API_BASE = 'https://shopify-store-o6mo.onrender.com/api';
 
 function renderHomeProducts(products) {
   var grid = document.getElementById('product-grid');

@@ -390,7 +390,7 @@
 
   // Load cart into summary
   function loadSummary() {
-    fetch('http://localhost:5000/api/cart')
+    fetch('https://shopify-store-o6mo.onrender.com/api/cart')
       .then(function(r){ return r.json(); })
       .then(function(cart){ renderSummary(cart); })
       .catch(function(){ renderSummary({ items: [] }); });
@@ -474,11 +474,11 @@
     } catch(e) {}
 
     // Attach cart items from backend
-    fetch('http://localhost:5000/api/cart')
+    fetch('https://shopify-store-o6mo.onrender.com/api/cart')
       .then(function(r){ return r.json(); })
       .then(function(cart){
         data.items = cart.items || [];
-        return fetch('http://localhost:5000/api/orders', {
+        return fetch('https://shopify-store-o6mo.onrender.com/api/orders', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)

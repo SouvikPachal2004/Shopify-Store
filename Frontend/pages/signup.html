@@ -172,7 +172,7 @@
         var fullName = this.firstName.value.trim() + ' ' + this.lastName.value.trim();
 
         try {
-          var res = await fetch('http://localhost:5000/api/auth/register', {
+          var res = await fetch('https://shopify-store-o6mo.onrender.com/api/auth/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
