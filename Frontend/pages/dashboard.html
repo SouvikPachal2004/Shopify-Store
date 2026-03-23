@@ -84,6 +84,7 @@
     .status-shipped    { background: #dbeafe; color: #1d4ed8; }
     .status-delivered  { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
     .status-pending    { background: #f1f5f9; color: #475569; }
+    .status-cancelled  { background: #fee2e2; color: #dc2626; }
 
     /* Progress tracker */
     .order-progress { padding: 18px 20px; border-bottom: 1px solid #f1f5f9; }
@@ -343,6 +344,23 @@
     return new Date(d).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
   }
 
+  function cancelOrder(orderId, btn) {
+    if (!confirm('Are you sure you want to cancel this order?')) return;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    var localCancelled = [];
+    try { localCancelled = JSON.parse(localStorage.getItem('hp_cancelled_orders')) || []; } catch(e){}
+    if (localCancelled.indexOf(String(orderId)) === -1) localCancelled.push(String(orderId));
+    localStorage.setItem('hp_cancelled_orders', JSON.stringify(localCancelled));
+    var controller = new AbortController();
+    var timeout = setTimeout(function(){ controller.abort(); }, 15000);
+    fetch(API + '/orders/' + orderId + '/cancel', {
+      method: 'PATCH', headers: { 'Content-Type': 'application/json' }, signal: controller.signal
+    }).then(function(r){ clearTimeout(timeout); return r.json(); })
+    .catch(function(){ clearTimeout(timeout); })
+    .finally(function(){ loadOrders(); });
+  }
+
   function calcTotal(items) {
     var sub = 0;
     (items||[]).forEach(function(i){ sub += Number(i.price) * Number(i.qty); });
@@ -353,11 +371,22 @@
   function renderOrders(orders) {
     var list = document.getElementById('orders-list');
 
-    // Update stats
-    document.getElementById('stat-orders').textContent    = orders.length;
+    // Apply local cancellations as fallback
+    var localCancelled = [];
+    try { localCancelled = JSON.parse(localStorage.getItem('hp_cancelled_orders')) || []; } catch(e){}
+    orders = orders.map(function(o) {
+      if (localCancelled.indexOf(String(o._id.$oid || o._id)) !== -1 && o.status !== 'cancelled') {
+        return Object.assign({}, o, { status: 'cancelled' });
+      }
+      return o;
+    });
+
+    // Update stats — exclude cancelled
+    var activeOrders = orders.filter(function(o){ return o.status !== 'cancelled'; });
+    document.getElementById('stat-orders').textContent    = activeOrders.length;
     document.getElementById('stat-delivered').textContent = orders.filter(function(o){ return o.status === 'delivered'; }).length;
     document.getElementById('stat-transit').textContent   = orders.filter(function(o){ return o.status === 'shipped' || o.status === 'processing'; }).length;
-    document.getElementById('stat-points').textContent    = 150 + orders.length * 50;
+    document.getElementById('stat-points').textContent    = 150 + activeOrders.length * 50;
 
     if (!orders.length) {
       list.innerHTML =
@@ -410,7 +439,7 @@
           '<div class="order-card-head">' +
             '<div>' +
               '<div class="order-no">' + (o.orderNumber || 'HP-' + o._id) + '</div>' +
-              '<div class="order-date">' + formatDate(o.createdAt) + ' &nbsp;�&nbsp; ' + (items.length) + ' item' + (items.length !== 1 ? 's' : '') + '</div>' +
+              '<div class="order-date">' + formatDate(o.createdAt) + ' &nbsp;&bull;&nbsp; ' + (items.length) + ' item' + (items.length !== 1 ? 's' : '') + '</div>' +
             '</div>' +
             '<span class="order-status ' + statusClass + '">' + displayStatus + '</span>' +
           '</div>' +
@@ -419,6 +448,10 @@
           '<div class="order-card-foot">' +
             '<div class="order-total">Total: <strong>\u20B9' + total.toFixed(2) + '</strong></div>' +
             '<div class="order-actions">' +
+              ((['confirmed','processing','pending'].indexOf(displayStatus) !== -1) ?
+                '<button class="btn-cancel" onclick="cancelOrder(\'' + String(o._id.$oid || o._id) + '\',this)" style="padding:7px 14px;background:#fff;color:#dc2626;border:1.5px solid #dc2626;border-radius:8px;font-family:Poppins,sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;">' +
+                  '<i class="fas fa-times-circle"></i> Cancel' +
+                '</button>' : '') +
               '<button class="btn-track" onclick="openTrack(' + JSON.stringify(o).replace(/"/g,'&quot;') + ')">' +
                 '<i class="fas fa-map-marker-alt"></i> Track Order' +
               '</button>' +
