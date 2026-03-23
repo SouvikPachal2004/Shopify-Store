@@ -7,14 +7,7 @@ const path     = require('path');
 require('dotenv').config();
 
 const app = express();
-app.use(cors({
-  origin: [
-    'https://shopify-store-vert.vercel.app',
-    'http://localhost:3000',
-    'http://127.0.0.1:3000'
-  ],
-  credentials: true
-}));
+app.use(cors());
 app.use(express.json());
 
 const MONGO_URI  = process.env.MONGO_URI  || 'mongodb://127.0.0.1:27017';
