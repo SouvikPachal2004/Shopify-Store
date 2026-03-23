@@ -524,7 +524,7 @@ app.get('/api/health', (req, res) => res.json({ status: 'ok', db: DB_NAME }));
 
 /* ─── Start ─────────────────────────────────────────────────────────────── */
 // Listen first, then connect to MongoDB
-const server = app.listen(PORT, () => {
+const server = app.listen(PORT, '0.0.0.0', () => {
   console.log('HappyPaws backend running on port ' + PORT);
 });
 
