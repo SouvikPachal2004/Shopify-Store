@@ -7,29 +7,12 @@ A modern, full-featured e-commerce platform for pet products with dynamic fronte
 ![Features](https://img.shields.io/badge/features-fully--functional-green)
 
 ---
+<img width="1918" height="917" alt="image" src="https://github.com/user-attachments/assets/b916ed19-dbb9-4248-9c7e-bbe619ad0cfe" />
+## 📞 Quick Links
 
-## ⚡ Quick Start (3 Minutes)
-
-### 1. Install Dependencies
-```bash
-cd Backend
-npm install
-```
-
-### 2. Start Server
-```bash
-node server.js
-```
-
-### 3. Open Browser
-```
-http://localhost:5000/frontend/index.html
-```
-
-**That's it!** Your store is running! 🎉
+- **Homepage:** https://shopify-store-vert.vercel.app
 
 ---
-
 ## 📋 What's Included
 
 ### ✅ 12 Complete Pages
@@ -314,27 +297,6 @@ Already included:
 
 ---
 
-## 🤝 Support
-
-### Common Issues
-
-**Q: Backend won't start**  
-A: Check if MongoDB is running and port 5000 is free
-
-**Q: Products show blank**  
-A: Check browser console for errors, verify API is responding
-
-**Q: Cart doesn't update**  
-A: Clear browser cache and localStorage
-
-### Debug Tips
-1. Open browser DevTools (F12)
-2. Check Console for errors
-3. Inspect Network tab for failed requests
-4. Review backend terminal logs
-
----
-
 ## 📄 License
 
 This project is for educational and commercial use.
@@ -355,10 +317,7 @@ You'll know everything is working when:
 
 ## 📞 Quick Links
 
-- **Homepage:** http://localhost:5000/frontend/index.html
-- **Shop:** http://localhost:5000/frontend/pages/shop.html
-- **API:** http://localhost:5000/api/products
-- **Documentation:** [INDEX.md](./INDEX.md)
+- **Homepage:** https://shopify-store-vert.vercel.app
 
 ---
 
@@ -373,7 +332,3 @@ Your complete e-commerce platform is ready to customize and deploy!
 4. 🚀 Deploy to your hosting platform
 
 ---
-
-**Happy selling! 🐾✨**
-
-*Built with ❤️ for pet lovers everywhere*
