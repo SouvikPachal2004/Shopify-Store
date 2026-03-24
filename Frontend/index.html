@@ -22,53 +22,37 @@
 
   <body>
 
-    <!-- ===== STICKY HEADER ===== -->
-    <header class="header" id="main-header">
-      <a href="index.html" class="logo">
-        <div class="paw-icon">&#x1F43E;</div>
-        Happy<span>Paws</span>
-      </a>
-
-      <nav>
-        <a href="index.html" class="active">Home</a>
-        <a href="pages/shop.html">Shop</a>
-        <a href="pages/about.html">About</a>
-        <a href="pages/contact.html">Contact</a>
-      </nav>
-
-      <div class="header-icons">
-        <button
-          class="icon-btn"
-          title="Search"
-          onclick="window.location.href='pages/search-results.html'"
-        >
-          <i class="fas fa-search"></i>
-        </button>
-        <button
-          class="icon-btn"
-          title="Cart"
-          onclick="window.location.href='pages/cart.html'"
-        >
-          <i class="fas fa-shopping-cart"></i>
-          <span class="cart-badge" id="cart-count" style="display:none">0</span>
-        </button>
-        <button
-          class="btn-login btn"
-          onclick="window.location.href='pages/login.html'"
-        >
-          <i class="fas fa-sign-in-alt"></i> Login
-        </button>
-        <button
-          class="btn-signup"
-          onclick="window.location.href='pages/signup.html'"
-        >
-          <i class="fas fa-user-plus"></i> Sign Up
-        </button>
-      </div>
-    </header>
-
     <!-- ===== PAGE SHELL ===== -->
     <div class="page-shell">
+
+      <!-- ===== STICKY HEADER ===== -->
+      <header class="header" id="main-header">
+        <a href="index.html" class="logo">
+          <div class="paw-icon">&#x1F43E;</div>
+          Happy<span>Paws</span>
+        </a>
+        <nav>
+          <a href="index.html" class="active">Home</a>
+          <a href="pages/shop.html">Shop</a>
+          <a href="pages/about.html">About</a>
+          <a href="pages/contact.html">Contact</a>
+        </nav>
+        <div class="header-icons">
+          <button class="icon-btn" title="Search" onclick="window.location.href='pages/search-results.html'">
+            <i class="fas fa-search"></i>
+          </button>
+          <button class="icon-btn" title="Cart" onclick="window.location.href='pages/cart.html'">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-badge" id="cart-count" style="display:none">0</span>
+          </button>
+          <button class="btn-login btn" onclick="window.location.href='pages/login.html'">
+            <i class="fas fa-sign-in-alt"></i> Login
+          </button>
+          <button class="btn-signup" onclick="window.location.href='pages/signup.html'">
+            <i class="fas fa-user-plus"></i> Sign Up
+          </button>
+        </div>
+      </header>
 
       <!-- ===== HERO ===== -->
       <section class="hero">
