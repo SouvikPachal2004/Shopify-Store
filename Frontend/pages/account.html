@@ -522,7 +522,7 @@
 
     fetch(API + '/orders?' + params.toString())
       .then(function(r){ return r.json(); })
-      .then(function(orders){ renderOrders(Array.isArray(orders) - orders : []); })
+      .then(function(orders){ renderOrders(Array.isArray(orders) ? orders : []); })
       .catch(function(){ renderOrders([]); });
   }
 
