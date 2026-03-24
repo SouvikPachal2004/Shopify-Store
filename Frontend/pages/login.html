@@ -106,8 +106,8 @@
       function togglePw(id, btn) {
         var input = document.getElementById(id);
         var isText = input.type === 'text';
-        input.type = isText - 'password' : 'text';
-        btn.innerHTML = isText - '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+        input.type = isText ? 'password' : 'text';
+        btn.innerHTML = isText ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
       }
 
       document.getElementById('login-form').addEventListener('submit', async function(e) {

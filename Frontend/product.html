@@ -65,7 +65,7 @@
 
         document.getElementById('product-title').textContent = product.title;
         document.getElementById('product-price').textContent = `$${product.price.toFixed(2)}`;
-        document.getElementById('product-compare').textContent = product.compareAtPrice - `$${product.compareAtPrice.toFixed(2)}` : '';
+        document.getElementById('product-compare').textContent = product.compareAtPrice ? `\u20B9${product.compareAtPrice.toFixed(2)}` : '';
         document.getElementById('product-description').textContent = product.description;
         document.getElementById('details-desc').textContent = product.description;
         document.getElementById('details-reviews').textContent = `⭐⭐⭐⭐⭐ ${product.reviews} reviews`;

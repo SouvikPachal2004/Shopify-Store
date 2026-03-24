@@ -158,12 +158,12 @@
   });
 
   function formatDate(dateStr) {
-    var d = dateStr - new Date(dateStr) : new Date();
+    var d = dateStr ? new Date(dateStr) : new Date();
     return d.toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' });
   }
 
   function addDays(dateStr, days) {
-    var d = dateStr - new Date(dateStr) : new Date();
+    var d = dateStr ? new Date(dateStr) : new Date();
     d.setDate(d.getDate() + days);
     return d.toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' });
   }
@@ -217,10 +217,10 @@
       addrEl.innerHTML =
         '<strong>' + (order.name || '') + '</strong><br>' +
         (order.address || '') +
-        (order.address2 - ', ' + order.address2 : '') + '<br>' +
-        (order.city || '') + (order.state - ', ' + order.state : '') +
-        (order.pincode - ' - ' + order.pincode : '') + '<br>' +
-        (order.phone - '+91 ' + order.phone : '');
+        (order.address2 ? ', ' + order.address2 : '') + '<br>' +
+        (order.city || '') + (order.state ? ', ' + order.state : '') +
+        (order.pincode ? ' - ' + order.pincode : '') + '<br>' +
+        (order.phone ? '+91 ' + order.phone : '');
     }
 
     // Email note

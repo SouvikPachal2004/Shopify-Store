@@ -362,10 +362,10 @@
   async function loadProduct() {
     try {
       var pid = new URLSearchParams(window.location.search).get('id');
-      var url = pid - (API + '/products/' + pid) : API + '/products';
+      var url = pid ? (API + '/products/' + pid) : API + '/products';
       var res = await fetch(url);
       var data = await res.json();
-      currentProduct = Array.isArray(data) - data[0] : data;
+      currentProduct = Array.isArray(data) ? data[0] : data;
       if (currentProduct) renderProduct(currentProduct);
     } catch(e) { console.error(e); }
   }
@@ -378,7 +378,7 @@
     document.getElementById('prod-brand').textContent = (p.collection || 'HappyPaws') + ' Premium';
 
     // Images � show ALL real images, no fallback padding
-    var imgs = Array.isArray(p.images) && p.images.length - [...p.images] : [FALLBACKS[0]];
+    var imgs = Array.isArray(p.images) && p.images.length ? [...p.images] : [FALLBACKS[0]];
     document.getElementById('main-img').src = imgs[0];
 
     document.getElementById('thumbs').innerHTML = imgs.map(function(src, i) {
@@ -463,14 +463,14 @@
       .then(function(all) {
         var related = all.filter(function(x){ return x._id !== p._id; }).slice(0, 4);
         document.getElementById('related-grid').innerHTML = related.map(function(rp) {
-          var img = Array.isArray(rp.images) && rp.images.length - rp.images[0] : FALLBACKS[0];
+          var img = Array.isArray(rp.images) && rp.images.length ? rp.images[0] : FALLBACKS[0];
           return '<div class="product-card" style="cursor:pointer" onclick="window.location.href=\'product.html?id=' + rp._id + '\'">' +
             '<div class="product-img-wrap"><img src="' + img + '" alt="' + rp.title + '" loading="lazy" /></div>' +
             '<div class="product-body">' +
               '<h3>' + rp.title + '</h3>' +
               '<div class="product-price">' +
                 '<span class="price-current">\u20B9' + Number(rp.price).toLocaleString('en-IN') + '</span>' +
-                (rp.compareAtPrice - '<span class="price-old">\u20B9' + Number(rp.compareAtPrice).toLocaleString('en-IN') + '</span>' : '') +
+                (rp.compareAtPrice ? '<span class="price-old">\u20B9' + Number(rp.compareAtPrice).toLocaleString('en-IN') + '</span>' : '') +
               '</div>' +
               '<button class="btn btn-primary add-to-cart-btn" data-pid="' + rp._id + '" onclick="event.stopPropagation();cartManager.addToCart(\'' + rp._id + '\',1)">' +
                 '<i class="fas fa-cart-plus"></i> Add to Cart' +

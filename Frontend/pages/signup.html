@@ -134,8 +134,8 @@
       function togglePw(id, btn) {
         var input = document.getElementById(id);
         var isText = input.type === 'text';
-        input.type = isText - 'password' : 'text';
-        btn.innerHTML = isText - '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+        input.type = isText ? 'password' : 'text';
+        btn.innerHTML = isText ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
       }
       function checkStrength(val) {
         var bar = document.getElementById('pw-bar');
@@ -146,8 +146,8 @@
         if (/[^A-Za-z0-9]/.test(val)) score++;
         var colors = ['#ef4444','#f97316','#eab308','#22c55e'];
         var widths = ['25%','50%','75%','100%'];
-        bar.style.width = score - widths[score-1] : '0';
-        bar.style.background = score - colors[score-1] : '';
+        bar.style.width = score ? widths[score-1] : '0';
+        bar.style.background = score ? colors[score-1] : '';
       }
 
       document.getElementById('signup-form').addEventListener('submit', async function(e) {
