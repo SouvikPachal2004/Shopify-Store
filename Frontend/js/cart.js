@@ -213,7 +213,7 @@ var cartManager = {
     var tax      = Math.round(subtotal * 0.18 * 100) / 100;
     var total    = Math.round((subtotal + shipping + tax) * 100) / 100;
 
-    if (subtotalEl) subtotalEl.textContent = '&#8377;' + subtotal.toFixed(2);
+    if (subtotalEl) subtotalEl.textContent = '\u20B9' + subtotal.toFixed(2);
     if (shippingEl) shippingEl.textContent = shipping > 0 ? '\u20B9' + shipping.toFixed(2) : 'Free';
     if (taxEl)      taxEl.textContent      = '\u20B9' + tax.toFixed(2);
     if (totalEl)    totalEl.textContent    = '\u20B9' + total.toFixed(2);
