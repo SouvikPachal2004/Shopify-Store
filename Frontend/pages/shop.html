@@ -1,8 +1,8 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#x1F43E;</text></svg>" />
+  <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAZUlEQVR4nO2PSw4AEAxEewoXdXor9lL0KyTzku7MzEMEwMu0Wvp8mbljiaTMmoMABEJLXPlTaFcufW82l4xL36sFou9NgVsSy3FOwivF9alJ/S0EvhCwSoSNWyTCxzUSaeMAgAwGQ5Y8+RtGaJkAAAAASUVORK5CYII=" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shop - HappyPaws</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -320,8 +320,8 @@
               </div>
               <select class="sort-select" id="sort-select" onchange="sortProducts(this.value)">
                 <option value="featured">Sort: Featured</option>
-                <option value="price-low">Price: Low ? High</option>
-                <option value="price-high">Price: High ? Low</option>
+                <option value="price-low">Price: Low - High</option>
+                <option value="price-high">Price: High - Low</option>
                 <option value="rating">Best Rating</option>
                 <option value="newest">Newest</option>
               </select>
@@ -344,7 +344,7 @@
           <div class="site-footer-grid">
             <div class="site-footer-brand">
               <div class="logo"><div class="paw-icon">🐾</div>Happy<span>Paws</span></div>
-              <p>Quality products for happy, healthy pets � trusted by thousands of pet parents.</p>
+              <p>Quality products for happy, healthy pets — trusted by thousands of pet parents.</p>
               <div class="social-links">
                 <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
                 <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
@@ -407,16 +407,16 @@
       ];
 
       function productCard(p) {
-        const img = Array.isArray(p.images) ? p.images[0] : (p.image || '');
+        const img = Array.isArray(p.images) - p.images[0] : (p.image || '');
         const old = p.compareAtPrice || p.price;
-        const disc = old > p.price ? Math.round((1 - p.price/old)*100) : 0;
+        const disc = old > p.price - Math.round((1 - p.price/old)*100) : 0;
         const stars = '⭐'.repeat(Math.floor(p.rating||5)) + '☆'.repeat(5-Math.floor(p.rating||5));
         const id = p._id || p.id || '';
         return (
           '<div class="product-card" onclick="window.location.href=\'product.html?id=' + id + '\'" style="cursor:pointer">' +
             '<div class="product-img-wrap">' +
               '<img src="' + img + '" alt="' + p.title + '" loading="lazy" />' +
-              (disc > 0 ? '<span class="product-badge">-' + disc + '%</span>' : '') +
+              (disc > 0 - '<span class="product-badge">-' + disc + '%</span>' : '') +
               '<button class="product-wishlist" onclick="event.stopPropagation()"><i class="far fa-heart"></i></button>' +
             '</div>' +
             '<div class="product-body">' +
@@ -425,7 +425,7 @@
               '<div class="stars">' + stars + ' <span>(' + (p.reviews||0) + ')</span></div>' +
               '<div class="product-price">' +
                 '<span class="price-current">\u20B9' + p.price.toFixed(2) + '</span>' +
-                (old > p.price ? '<span class="price-old">\u20B9' + old.toFixed(2) + '</span>' : '') +
+                (old > p.price - '<span class="price-old">\u20B9' + old.toFixed(2) + '</span>' : '') +
               '</div>' +
               '<button class="btn btn-primary add-to-cart-btn" data-pid="' + id + '" onclick="event.stopPropagation();addToCart(\'' + id + '\')">' +
                 '<i class="fas fa-cart-plus"></i> Add to Cart' +
@@ -502,7 +502,7 @@
       fetch('https://shopify-store-o6wo.onrender.com/api/products')
         .then(r => r.json())
         .then(data => {
-          allProducts = (data && data.length) ? data : staticProducts;
+          allProducts = (data && data.length) - data : staticProducts;
           filtered = [...allProducts];
           renderProducts(filtered);
         })

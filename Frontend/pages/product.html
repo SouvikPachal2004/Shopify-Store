@@ -1,9 +1,9 @@
-﻿ <!DOCTYPE html>
+﻿﻿ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#x1F43E;</text></svg>" />
+  <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAZUlEQVR4nO2PSw4AEAxEewoXdXor9lL0KyTzku7MzEMEwMu0Wvp8mbljiaTMmoMABEJLXPlTaFcufW82l4xL36sFou9NgVsSy3FOwivF9alJ/S0EvhCwSoSNWyTCxzUSaeMAgAwGQ5Y8+RtGaJkAAAAASUVORK5CYII=" />
   <title>Product - HappyPaws</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -313,7 +313,7 @@
       <div class="site-footer-grid">
         <div class="site-footer-brand">
           <div class="logo"><div class="paw-icon">&#x1F43E;</div>Happy<span>Paws</span></div>
-          <p>Quality products for happy, healthy pets � trusted by thousands of pet parents across India.</p>
+          <p>Quality products for happy, healthy pets — trusted by thousands of pet parents across India.</p>
           <div class="social-links">
             <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
             <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
@@ -362,10 +362,10 @@
   async function loadProduct() {
     try {
       var pid = new URLSearchParams(window.location.search).get('id');
-      var url = pid ? (API + '/products/' + pid) : API + '/products';
+      var url = pid - (API + '/products/' + pid) : API + '/products';
       var res = await fetch(url);
       var data = await res.json();
-      currentProduct = Array.isArray(data) ? data[0] : data;
+      currentProduct = Array.isArray(data) - data[0] : data;
       if (currentProduct) renderProduct(currentProduct);
     } catch(e) { console.error(e); }
   }
@@ -378,7 +378,7 @@
     document.getElementById('prod-brand').textContent = (p.collection || 'HappyPaws') + ' Premium';
 
     // Images � show ALL real images, no fallback padding
-    var imgs = Array.isArray(p.images) && p.images.length ? [...p.images] : [FALLBACKS[0]];
+    var imgs = Array.isArray(p.images) && p.images.length - [...p.images] : [FALLBACKS[0]];
     document.getElementById('main-img').src = imgs[0];
 
     document.getElementById('thumbs').innerHTML = imgs.map(function(src, i) {
@@ -416,7 +416,7 @@
     // Rating bars
     var barsHtml = '';
     [5,4,3,2,1].forEach(function(s) {
-      var pct = s === r ? 68 : (s === r-1 ? 20 : 5);
+      var pct = s === r - 68 : (s === r-1 - 20 : 5);
       barsHtml += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:.8rem">' +
         '<span style="width:12px;color:#64748b;text-align:right">' + s + '</span>' +
         '<i class="fas fa-star" style="color:#fbbf24;font-size:.7rem"></i>' +
@@ -431,7 +431,7 @@
     // Features
     var feats = [
       'Premium quality materials for long-lasting durability',
-      'Safe and non-toxic � tested and approved for all pets',
+      'Safe and non-toxic — tested and approved for all pets',
       'Easy to clean and maintain',
       'Recommended by veterinarians across India',
       'Eco-friendly and sustainably sourced'
@@ -463,14 +463,14 @@
       .then(function(all) {
         var related = all.filter(function(x){ return x._id !== p._id; }).slice(0, 4);
         document.getElementById('related-grid').innerHTML = related.map(function(rp) {
-          var img = Array.isArray(rp.images) && rp.images.length ? rp.images[0] : FALLBACKS[0];
+          var img = Array.isArray(rp.images) && rp.images.length - rp.images[0] : FALLBACKS[0];
           return '<div class="product-card" style="cursor:pointer" onclick="window.location.href=\'product.html?id=' + rp._id + '\'">' +
             '<div class="product-img-wrap"><img src="' + img + '" alt="' + rp.title + '" loading="lazy" /></div>' +
             '<div class="product-body">' +
               '<h3>' + rp.title + '</h3>' +
               '<div class="product-price">' +
                 '<span class="price-current">\u20B9' + Number(rp.price).toLocaleString('en-IN') + '</span>' +
-                (rp.compareAtPrice ? '<span class="price-old">\u20B9' + Number(rp.compareAtPrice).toLocaleString('en-IN') + '</span>' : '') +
+                (rp.compareAtPrice - '<span class="price-old">\u20B9' + Number(rp.compareAtPrice).toLocaleString('en-IN') + '</span>' : '') +
               '</div>' +
               '<button class="btn btn-primary add-to-cart-btn" data-pid="' + rp._id + '" onclick="event.stopPropagation();cartManager.addToCart(\'' + rp._id + '\',1)">' +
                 '<i class="fas fa-cart-plus"></i> Add to Cart' +

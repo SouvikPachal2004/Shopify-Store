@@ -1,8 +1,8 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#x1F43E;</text></svg>" />
+  <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAZUlEQVR4nO2PSw4AEAxEewoXdXor9lL0KyTzku7MzEMEwMu0Wvp8mbljiaTMmoMABEJLXPlTaFcufW82l4xL36sFou9NgVsSy3FOwivF9alJ/S0EvhCwSoSNWyTCxzUSaeMAgAwGQ5Y8+RtGaJkAAAAASUVORK5CYII=" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Order Confirmed - HappyPaws</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -158,12 +158,12 @@
   });
 
   function formatDate(dateStr) {
-    var d = dateStr ? new Date(dateStr) : new Date();
+    var d = dateStr - new Date(dateStr) : new Date();
     return d.toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' });
   }
 
   function addDays(dateStr, days) {
-    var d = dateStr ? new Date(dateStr) : new Date();
+    var d = dateStr - new Date(dateStr) : new Date();
     d.setDate(d.getDate() + days);
     return d.toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' });
   }
@@ -175,7 +175,7 @@
 
     // Delivery estimate
     document.getElementById('delivery-date').textContent =
-      addDays(order.createdAt, 4) + ' � ' + addDays(order.createdAt, 7);
+      addDays(order.createdAt, 4) + ' – ' + addDays(order.createdAt, 7);
 
     // Items
     var items = order.items || [];
@@ -217,10 +217,10 @@
       addrEl.innerHTML =
         '<strong>' + (order.name || '') + '</strong><br>' +
         (order.address || '') +
-        (order.address2 ? ', ' + order.address2 : '') + '<br>' +
-        (order.city || '') + (order.state ? ', ' + order.state : '') +
-        (order.pincode ? ' - ' + order.pincode : '') + '<br>' +
-        (order.phone ? '+91 ' + order.phone : '');
+        (order.address2 - ', ' + order.address2 : '') + '<br>' +
+        (order.city || '') + (order.state - ', ' + order.state : '') +
+        (order.pincode - ' - ' + order.pincode : '') + '<br>' +
+        (order.phone - '+91 ' + order.phone : '');
     }
 
     // Email note
