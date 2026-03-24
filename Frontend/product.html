@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="announcement">? Free shipping on orders over $50 � 30-day returns</div>
+  <div class="announcement">&#x1F6CD; Free shipping on orders over &#8377;999 &nbsp;&bull;&nbsp; 30-day returns</div>
   <header class="site-header">
     <div class="brand-wrap">
       <div class="brand-logo-wrap">
@@ -64,7 +64,7 @@
 
         document.getElementById('product-title').textContent = product.title;
         document.getElementById('product-price').textContent = `$${product.price.toFixed(2)}`;
-        document.getElementById('product-compare').textContent = product.compareAtPrice ? `$${product.compareAtPrice.toFixed(2)}` : '';
+        document.getElementById('product-compare').textContent = product.compareAtPrice - `$${product.compareAtPrice.toFixed(2)}` : '';
         document.getElementById('product-description').textContent = product.description;
         document.getElementById('details-desc').textContent = product.description;
         document.getElementById('details-reviews').textContent = `⭐⭐⭐⭐⭐ ${product.reviews} reviews`;

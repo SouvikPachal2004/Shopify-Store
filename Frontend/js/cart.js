@@ -1,4 +1,4 @@
-﻿// ===== CART MANAGER =====
+﻿﻿/// ===== CART MANAGER =====
 var API_URL = 'https://shopify-store-o6wo.onrender.com/api';
 
 var cartManager = {
